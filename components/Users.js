@@ -1,64 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { View, Image, StyleSheet, FlatList, Text, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, FlatList, TextInput, Text, Button, AsyncStorage } from 'react-native';
 import RenderUser from './RenderUser';
 import Loading from './Loading';
+import { fetchMaleUsers } from '../redux/actions/maleAction';
+import { fetchFemaleUsers } from '../redux/actions/femaleAction';
+import { connect } from 'react-redux';
+import strings from '../localization/strings';
+import { language } from '../redux/actions/languageAction';
 
-export default function Users() {
-  const [users, setUsers] = useState([]);
+function Users(props) {
   const [activeUsers, setActiveUsers] = useState([]);
-  const [isActive, setIsActive] = useState({
-    male: false, female: false, both: true
-  });
   const [isLoading, setIsLoading] = useState(false);
-
-  // useEffect(() => {
-  //   fetch("https://desolate-river-35422.herokuapp.com/female")
-  //     .then(response => {
-  //       if (response.ok) return response.json();
-  //       else {
-  //         var error = new Error('Error' + response.status + ':' + response.statusText);
-  //         error.response = response;
-  //         throw error;
-  //       }
-  //     })
-  //     .then(data => {
-  //       setUsers((prevUsers => [...prevUsers, ...data]));
-  //     })
-  //     .catch(err => { console.log(err) });
-  // }, []);
-
-  // useEffect(() => {
-  //   fetch("https://desolate-river-35422.herokuapp.com/male")
-  //     .then(response => {
-  //       if (response.ok) return response.json();
-  //       else {
-  //         var error = new Error('Error' + response.status + ':' + response.statusText);
-  //         error.response = response;
-  //         throw error;
-  //       }
-  //     })
-  //     .then(data => {
-  //       setUsers((prevUsers => [...prevUsers, ...data]));
-  //     })
-  //     .catch(err => { console.log(err) });
-  // }, []);
-
-  // useEffect(() => {
-  //   setActiveUsers(users);
-  // }, [users]);
-
-  // const handleBoth = () => {
-  //   setActiveUsers(users);
-  //   setIsActive({ male: false, female: false, both: true });
-  // };
-  // const handleMale = () => {
-  //   setActiveUsers(users.filter(user => user.gender == 'male'));
-  //   setIsActive({ male: true, female: false, both: false });
-  // }
-  // const handleFemale = () => {
-  //   setActiveUsers(users.filter(user => user.gender == 'female'));
-  //   setIsActive({ male: false, female: true, both: false });
-  // }
+  const [lang, setLang] = useState(strings.getLanguage());
 
   const handleInput = (val) => {
     setIsLoading(true);
@@ -86,29 +39,51 @@ export default function Users() {
       })
       .catch(err => console.log(err));
   }
+  const handleLanguage = (val) => {
+    setLang(val);
+    strings.setLanguage(val);
+    AsyncStorage.setItem("defaultLanguage", val);
+    props.language(val);
+  }
 
-return (
-  <View>
-    {/* <View style={styles.btnContainer}>
-        <Button title="Both" color={isActive.both ? 'blue' : "#69a4d8"} onPress={handleBoth} />
-        <Button title="Female" color={isActive.female ? 'blue' : "#69a4d8"} onPress={handleFemale} />
-        <Button title="Male" color={isActive.male ? 'blue' : "#69a4d8"} onPress={handleMale} />
-      </View> */}
-    <View style={styles.inputContainer}>
-      <TextInput style={styles.input} onChangeText={handleInput} placeholder="Search for User" />
+  return (
+    <View>
+      <View style={styles.btnContainer}>
+        <Button title="English" color={lang === "en" ? 'blue' : "#69a4d8"} onPress={() => handleLanguage("en")} />
+        <Button title="عربي" color={lang === "ar" ? 'blue' : "#69a4d8"} onPress={() => handleLanguage("ar")} />
+      </View>
+      <View style={styles.inputContainer}>
+        <TextInput style={styles.input} onChangeText={handleInput} placeholder="Search for User..." />
+        <Text style={styles.title}>
+          {strings.how}
+        </Text>
+      </View>
+      {isLoading ? <Loading /> :
+        <View>
+          <FlatList
+            data={activeUsers}
+            ListEmptyComponent={() => <RenderUser user={null} />}
+            renderItem={({ item }) => <RenderUser user={item} />}
+            keyExtractor={(item, index) => String(index)}
+          />
+        </View>}
     </View>
-    {isLoading ? <Loading /> :
-      <View>
-        <FlatList
-          data={activeUsers}
-          ListEmptyComponent={() => <RenderUser user={null} />}
-          renderItem={({ item }) => <RenderUser user={item} />}
-          keyExtractor={(item, index) => String(index)}
-        />
-      </View>}
-  </View>
-);
+  );
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchMaleUsers: () => dispatch(fetchMaleUsers()),
+  fetchFemaleUsers: () => dispatch(fetchFemaleUsers()),
+  language: (val) => dispatch(language(val))
+});
+
+const mapStateToProps = (state) => ({
+  maleUsersState: state.maleUsers,
+  femaleUsersState: state.femaleUsers,
+  languageState: state.language
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users);
 
 const styles = StyleSheet.create({
   btnContainer: {

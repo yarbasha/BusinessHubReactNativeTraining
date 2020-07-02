@@ -1,4 +1,5 @@
 package com.businesshubreactnativetraining;
+import com.babisoft.ReactNativeLocalization.ReactNativeLocalizationPackage;
 
 import android.app.Application;
 import android.content.Context;

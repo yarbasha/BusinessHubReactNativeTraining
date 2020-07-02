@@ -6,33 +6,51 @@
  * @flow strict-local
  */
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import  Users  from './components/Users';
+import Users from './components/Users';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+import strings from './localization/strings';
+import { AsyncStorage } from 'react-native';
+import Loading from './components/Loading';
+import { language } from './redux/actions/languageAction';
 
 const App: () => React$Node = () => {
-  return (
-    <>
-      <View style={styles.container}>
-        <Users />
-      </View>
-    </>
-  );
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    AsyncStorage.getItem("defaultLanguage")
+      .then(val => {
+        if (val) {
+          AsyncStorage.setItem("defaultLanguage", val);
+          strings.setLanguage(val);
+          store.dispatch(language(val));
+          setIsLoading(false);
+        }
+        else {
+          strings.setLanguage("ar");
+          setIsLoading(false);
+        }
+      });
+  }, []);
+
+  if (isLoading) {
+    return <Loading />
+  }
+  else {
+    return (
+      <>
+        <Provider store={store}>
+          <View style={styles.container}>
+            <Users />
+          </View>
+        </Provider>
+      </>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
