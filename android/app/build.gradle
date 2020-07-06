@@ -224,6 +224,10 @@ dependencies {
     }
 
     implementation project(':react-native-localization')
+
+    implementation project(':@react-native-community_async-storage')
+
+    implementation project(':react-native-vector-icons')
 }
 
 // Run this once to be able to run the application with BUCK
@@ -234,3 +238,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

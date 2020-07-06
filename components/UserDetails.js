@@ -1,29 +1,25 @@
 import React, { useState } from 'react';
-import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, Text } from 'react-native';
 import strings from "../localization/strings";
-import { useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux';
 
-function RenderUser(props) {
-  const navigation = useNavigation();
-  const { user } = props;
+function UserDetails(props) {
+  const user = props.route.params.user;
   if (user) {
     const defaultUserImage = user.gender == "male" ? require('../src/images/defaultMaleUser.jpg') : require('../src/images/defaultFemaleUser.jpg');
     const [image, setImage] = useState(defaultUserImage);
     return (
-      <TouchableOpacity onPress={() => navigation.navigate('User Details', { user })}>
-        <View style={[styles.user, { flexDirection: props.language == "en" ? "row" : "row-reverse" }]}>
-          <Image
-            style={styles.avatar}
-            source={image}
-            onLoad={() => setImage({ uri: user.picture })}
-            onError={() => setImage(defaultUserImage)}
-          />
-          <View style={styles.info}>
-            <Text style={styles.text}>{strings.firstName}{user.name}</Text>
-          </View>
+      <View style={[styles.user, { flexDirection: props.language == "en" ? "row" : "row-reverse" }]}>
+        <Image
+          style={styles.avatar}
+          source={image}
+          onLoad={() => setImage({ uri: user.picture })}
+          onError={() => setImage(defaultUserImage)}
+        />
+        <View style={styles.info}>
+          <Text style={styles.text}>{strings.firstName}{user.name}</Text>
         </View>
-      </TouchableOpacity>
+      </View>
     );
   }
   else {
@@ -39,7 +35,7 @@ const mapStateToProps = (state) => ({
   language: state.language.lang
 });
 
-export default connect(mapStateToProps)(RenderUser);
+export default connect(mapStateToProps)(UserDetails);
 
 const styles = StyleSheet.create({
   user: {

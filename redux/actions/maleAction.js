@@ -11,6 +11,6 @@ export const fetchMaleUsers = () => (dispatch) => {
         throw error;
       }
     })
-    .then(data => dispatch({ type: ActionTypes.FETCH_MALE_USERS_LOADING, data }))
-    .catch(err => dispatch({ type: ActionTypes.FETCH_MALE_USERS_SUCCESS, err }));
+    .then(data => dispatch({ type: ActionTypes.FETCH_MALE_USERS_SUCCESS, data }))
+    .catch(err => dispatch({ type: ActionTypes.FETCH_MALE_USERS_FAILED, err }));
 };

@@ -1,17 +1,37 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, FlatList, TextInput, Text, Button, AsyncStorage } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, FlatList, TextInput, Text, Button } from 'react-native';
 import RenderUser from './RenderUser';
 import Loading from './Loading';
 import { fetchMaleUsers } from '../redux/actions/maleAction';
 import { fetchFemaleUsers } from '../redux/actions/femaleAction';
 import { connect } from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-community/async-storage';
 import strings from '../localization/strings';
 import { language } from '../redux/actions/languageAction';
+
 
 function Users(props) {
   const [activeUsers, setActiveUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [lang, setLang] = useState(strings.getLanguage());
+
+  let usersIsLoading = true;
+  let users;
+  let isItSearch = false;
+
+  if (props.route.name == "Female Users") {
+    users = props.femaleUsersState.users;
+    usersIsLoading = props.femaleUsersState.isLoading;
+  }
+  else if (props.route.name == "Male Users") {
+    users = props.maleUsersState.users;
+    usersIsLoading = props.maleUsersState.isLoading;
+  }
+  else {
+    users = [];
+    usersIsLoading = false;
+    isItSearch = true;
+  }
 
   const handleInput = (val) => {
     setIsLoading(true);
@@ -25,12 +45,13 @@ function Users(props) {
         }
       })
       .then(data => {
+        console.log(data);
         const { error } = data;
         if (error) {
           setActiveUsers([]);
           setIsLoading(false);
           var err = new Error('Error ' + error);
-          throw error;
+          throw err;
         }
         else {
           setActiveUsers(data);
@@ -39,73 +60,77 @@ function Users(props) {
       })
       .catch(err => console.log(err));
   }
+
   const handleLanguage = (val) => {
-    setLang(val);
-    strings.setLanguage(val);
     AsyncStorage.setItem("defaultLanguage", val);
-    props.language(val);
-  }
+    props.languageAction(val);
+    strings.setLanguage(val);
+  };
 
   return (
-    <View>
-      <View style={styles.btnContainer}>
-        <Button title="English" color={lang === "en" ? 'blue' : "#69a4d8"} onPress={() => handleLanguage("en")} />
-        <Button title="عربي" color={lang === "ar" ? 'blue' : "#69a4d8"} onPress={() => handleLanguage("ar")} />
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput style={styles.input} onChangeText={handleInput} placeholder="Search for User..." />
-        <Text style={styles.title}>
-          {strings.how}
-        </Text>
-      </View>
-      {isLoading ? <Loading /> :
-        <View>
+    < View style={{ flex: 1 }}>
+      {isItSearch && <>
+        <View style={[styles.btnContainer, { flexDirection: props.language == "en" ? "row" : "row-reverse" }]}>
+          <Icon name="bars" size={35} color="blue" onPress={() => props.navigation.openDrawer()} />
+          <Button title="English" color={props.language == "en" ? 'blue' : "#69a4d8"} onPress={() => handleLanguage("en")} />
+          <Button title="عربي" color={props.language == "ar" ? 'blue' : "#69a4d8"} onPress={() => handleLanguage("ar")} />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={[styles.input, { textAlign: props.language == "en" ? "left" : "right" }]}
+            onChangeText={handleInput}
+            placeholder={strings.searchForUser}
+          />
+          <Text>{props.language.lang}</Text>
+        </View>
+      </>}
+      {usersIsLoading || isLoading ? <Loading /> :
+        <View style={{ flex: 1 }}>
           <FlatList
-            data={activeUsers}
+            data={[...users, ...activeUsers]}
             ListEmptyComponent={() => <RenderUser user={null} />}
             renderItem={({ item }) => <RenderUser user={item} />}
             keyExtractor={(item, index) => String(index)}
+            style={{ flex: 1 }}
           />
         </View>}
-    </View>
+    </View >
   );
 };
 
 const mapDispatchToProps = (dispatch) => ({
   fetchMaleUsers: () => dispatch(fetchMaleUsers()),
   fetchFemaleUsers: () => dispatch(fetchFemaleUsers()),
-  language: (val) => dispatch(language(val))
+  languageAction: (val) => dispatch(language(val))
 });
 
 const mapStateToProps = (state) => ({
   maleUsersState: state.maleUsers,
   femaleUsersState: state.femaleUsers,
-  languageState: state.language
+  language: state.language.lang
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);
 
 const styles = StyleSheet.create({
   btnContainer: {
-    flexDirection: 'row',
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
     padding: 10,
-    borderColor: 'transparent',
     borderBottomColor: '#69a4d8',
-    borderWidth: 1
+    borderBottomWidth: 1,
+    marginHorizontal: 10
   },
   inputContainer: {
-    borderWidth: 1,
-    borderColor: 'transparent',
+    marginTop: 10,
+    borderBottomWidth: 1,
     borderBottomColor: '#69a4d8',
-    paddingBottom: 10,
     marginHorizontal: 10
   },
   input: {
     borderWidth: 1,
     borderColor: '#69a4d8',
     borderRadius: 10,
-    paddingLeft: 10,
-    fontSize: 20,
+    paddingHorizontal: 10,
+    fontSize: 20
   }
 });

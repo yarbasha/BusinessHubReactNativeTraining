@@ -1,7 +1,7 @@
 import * as ActionTypes from '../ActionTypes';
 
 const initState = {
-  isLoading: false,
+  isLoading: true,
   users: [],
   err: {}
 };

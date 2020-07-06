@@ -7,15 +7,15 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, } from 'react-native';
-
-import Users from './components/Users';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import strings from './localization/strings';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import Loading from './components/Loading';
 import { language } from './redux/actions/languageAction';
+import { NavigationContainer } from '@react-navigation/native';
+import Main from './components/Main';
+import Test from './components/Test';
 
 const App: () => React$Node = () => {
 
@@ -32,6 +32,7 @@ const App: () => React$Node = () => {
         }
         else {
           strings.setLanguage("ar");
+          store.dispatch(language("ar"));
           setIsLoading(false);
         }
       });
@@ -43,22 +44,16 @@ const App: () => React$Node = () => {
   else {
     return (
       <>
-        <Provider store={store}>
-          <View style={styles.container}>
-            <Users />
-          </View>
-        </Provider>
+        <NavigationContainer>
+          <Provider store={store}>
+            <Main />
+            {/* <Test /> */}
+          </Provider>
+        </NavigationContainer>
       </>
     );
   }
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#bcdee8',
-    padding: 6,
-  }
-});
-
 export default App;
+

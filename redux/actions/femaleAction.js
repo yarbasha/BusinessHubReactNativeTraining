@@ -12,5 +12,5 @@ export const fetchFemaleUsers = () => (dispatch) => {
       }
     })
     .then(data => dispatch({ type: ActionTypes.FETCH_FEMALE_USERS_SUCCESS, data }))
-    .catch(err => dispatch({ type: ActionTypes.FETCH_FEMALE_USERS_SUCCESS, err }));
+    .catch(err => dispatch({ type: ActionTypes.FETCH_FEMALE_USERS_FAILED, err }));
 };
