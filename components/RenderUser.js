@@ -3,6 +3,7 @@ import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import strings from "../localization/strings";
 import { useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 function RenderUser(props) {
   const navigation = useNavigation();
@@ -43,10 +44,12 @@ export default connect(mapStateToProps)(RenderUser);
 
 const styles = StyleSheet.create({
   user: {
-    marginHorizontal: 5,
-    marginVertical: 5,
-    borderRadius: 50,
-    backgroundColor: '#f0f8ff',
+    marginHorizontal: wp('2.8%'),
+    marginVertical: hp('0.6%'),
+    borderRadius: wp('5%'),
+    borderBottomLeftRadius: wp('10%'),
+    borderTopRightRadius: wp('10%'),
+    backgroundColor: '#eee',
     elevation: 12,
     shadowColor: "#000",
     shadowOffset: {
@@ -57,11 +60,11 @@ const styles = StyleSheet.create({
     shadowRadius: 7.49,
   },
   avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: '#69a4d8'
+    width: wp('20%'),
+    height: wp('20%'),
+    borderRadius: wp('5%'),
+    borderTopRightRadius: wp('10%'),
+    borderBottomLeftRadius: wp('10%')
   },
   info: {
     flexGrow: 1,
@@ -69,19 +72,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly"
   },
   text: {
-    fontSize: 18,
+    fontSize: hp('2.7%'),
     fontFamily: "arial",
-    marginHorizontal: 10,
+    marginHorizontal: wp('2%'),
     color: "#69a4d8"
   },
   container: {
-    borderColor: 'red',
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 20,
-    marginHorizontal: 10,
-    marginTop: 20,
-    backgroundColor: "#f8c4c4a6",
+    marginTop: hp('4%'),
     alignItems: "center"
   }
 });

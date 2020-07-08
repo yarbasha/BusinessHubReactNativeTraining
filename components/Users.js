@@ -9,6 +9,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-community/async-storage';
 import strings from '../localization/strings';
 import { language } from '../redux/actions/languageAction';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import Header from './Header';
 
 
 function Users(props) {
@@ -18,14 +20,20 @@ function Users(props) {
   let usersIsLoading = true;
   let users;
   let isItSearch = false;
+  let headerTitle;
+  let isItUsers = false;
 
   if (props.route.name == "Female Users") {
     users = props.femaleUsersState.users;
     usersIsLoading = props.femaleUsersState.isLoading;
+    headerTitle = strings.femaleUsersScreenName;
+    isItUsers = true;
   }
   else if (props.route.name == "Male Users") {
     users = props.maleUsersState.users;
     usersIsLoading = props.maleUsersState.isLoading;
+    headerTitle = strings.maleUsersScreenName;
+    isItUsers = true;
   }
   else {
     users = [];
@@ -45,7 +53,6 @@ function Users(props) {
         }
       })
       .then(data => {
-        console.log(data);
         const { error } = data;
         if (error) {
           setActiveUsers([]);
@@ -71,9 +78,9 @@ function Users(props) {
     < View style={{ flex: 1 }}>
       {isItSearch && <>
         <View style={[styles.btnContainer, { flexDirection: props.language == "en" ? "row" : "row-reverse" }]}>
-          <Icon name="bars" size={35} color="blue" onPress={() => props.navigation.openDrawer()} />
-          <Button title="English" color={props.language == "en" ? 'blue' : "#69a4d8"} onPress={() => handleLanguage("en")} />
-          <Button title="عربي" color={props.language == "ar" ? 'blue' : "#69a4d8"} onPress={() => handleLanguage("ar")} />
+          <Icon name="bars" size={35} color="#69a4d8" onPress={() => props.navigation.openDrawer()} />
+          <Button title="English" color={props.language == "en" ? '#1e13c5' : "#69a4d8"} onPress={() => handleLanguage("en")} />
+          <Button title="عربي" color={props.language == "ar" ? '#1e13c5' : "#69a4d8"} onPress={() => handleLanguage("ar")} />
         </View>
         <View style={styles.inputContainer}>
           <TextInput
@@ -85,15 +92,18 @@ function Users(props) {
         </View>
       </>}
       {usersIsLoading || isLoading ? <Loading /> :
-        <View style={{ flex: 1 }}>
-          <FlatList
-            data={[...users, ...activeUsers]}
-            ListEmptyComponent={() => <RenderUser user={null} />}
-            renderItem={({ item }) => <RenderUser user={item} />}
-            keyExtractor={(item, index) => String(index)}
-            style={{ flex: 1 }}
-          />
-        </View>}
+        <>
+          {isItUsers && <Header title={headerTitle} />}
+          <View style={{ flex: 1 }}>
+            <FlatList
+              data={[...users, ...activeUsers]}
+              ListEmptyComponent={() => <RenderUser user={null} />}
+              renderItem={({ item }) => <RenderUser user={item} />}
+              keyExtractor={(item, index) => String(index)}
+              style={{ flex: 1 }}
+            />
+          </View>
+        </>}
     </View >
   );
 };
@@ -115,22 +125,23 @@ export default connect(mapStateToProps, mapDispatchToProps)(Users);
 const styles = StyleSheet.create({
   btnContainer: {
     justifyContent: "space-between",
-    padding: 10,
+    height: hp('7.5%'),
+    alignItems: "center",
     borderBottomColor: '#69a4d8',
     borderBottomWidth: 1,
-    marginHorizontal: 10
+    marginHorizontal: wp('2.8%')
   },
   inputContainer: {
-    marginTop: 10,
+    marginTop: hp('2%'),
     borderBottomWidth: 1,
     borderBottomColor: '#69a4d8',
-    marginHorizontal: 10
+    marginHorizontal: wp('4%')
   },
   input: {
     borderWidth: 1,
     borderColor: '#69a4d8',
     borderRadius: 10,
-    paddingHorizontal: 10,
-    fontSize: 20
+    paddingHorizontal: wp('3%'),
+    fontSize: hp('2.5%')
   }
 });

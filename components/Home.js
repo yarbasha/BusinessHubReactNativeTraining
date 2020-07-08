@@ -7,14 +7,9 @@ import { connect } from 'react-redux';
 import { fetchMaleUsers } from '../redux/actions/maleAction';
 import { fetchFemaleUsers } from '../redux/actions/femaleAction';
 import strings from '../localization/strings';
+import AuthTabs from './AuthTabs';
 
 const Tab = createBottomTabNavigator();
-
-const Tab3 = () => (
-  <View style={styles.container}>
-    <Text>More Information</Text>
-  </View>
-);
 
 function Home(props) {
   useEffect(() => {
@@ -23,7 +18,7 @@ function Home(props) {
   }, []);
   return (
     <>
-      <Tab.Navigator tabBarOptions={{ activeTintColor: "#69a4d8", tabStyle: styles.container }}>
+      <Tab.Navigator initialRouteName="AuthTabs" tabBarOptions={{ activeTintColor: "#69a4d8", tabStyle: styles.container }}>
         <Tab.Screen
           name="Female Users"
           component={UsersStack}
@@ -35,8 +30,8 @@ function Home(props) {
           options={{ tabBarIcon: ({ color }) => <Icon name="male" size={25} color={color} />, title: strings.maleUsersScreenName }}
         />
         <Tab.Screen
-          name="Tab3"
-          component={Tab3}
+          name="AuthTabs"
+          component={AuthTabs}
           options={{ tabBarIcon: ({ color }) => <Icon name="info-circle" size={25} color={color} />, title: strings.info }}
         />
       </Tab.Navigator>

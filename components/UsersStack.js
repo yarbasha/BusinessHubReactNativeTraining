@@ -22,14 +22,7 @@ export default function UsersStack(props) {
         component={Users}
         options={{
           title: screenName,
-          header: ({ scene, previous, navigation }) => {
-            const title = scene.descriptor.options.title;
-            return (
-              <Header
-                title={title}
-              />
-            );
-          }
+          header: () => null
         }}
       />
       <Stack.Screen
@@ -37,15 +30,7 @@ export default function UsersStack(props) {
         component={UserDetails}
         options={{
           title: strings.userDetails,
-          header: ({ scene, previous, navigation }) => {
-            const title = scene.descriptor.options.title;
-            return (
-              <Header
-                title={title}
-                hasBack={previous ? true : false}
-              />
-            );
-          }
+          header: () => null
         }}
       />
     </Stack.Navigator>
