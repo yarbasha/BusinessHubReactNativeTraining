@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import UsersStack from './UsersStack';
 import { connect } from 'react-redux';
-import { fetchMaleUsers } from '../redux/actions/maleAction';
-import { fetchFemaleUsers } from '../redux/actions/femaleAction';
+import { fetchFemaleUsers, fetchMaleUsers } from '../redux/actions/usersActions';
 import strings from '../localization/strings';
-import AuthTabs from './AuthTabs';
+import { globalStyles } from '../src/styles/styles';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import colors from '../src/styles/colors';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,21 +18,31 @@ function Home(props) {
   }, []);
   return (
     <>
-      <Tab.Navigator initialRouteName="AuthTabs" tabBarOptions={{ activeTintColor: "#69a4d8", tabStyle: styles.container }}>
+      <Tab.Navigator
+        initialRouteName="Female Users"
+        tabBarOptions={{
+          activeTintColor: colors.primary,
+          tabStyle: globalStyles.tabContainer,
+          keyboardHidesTabBar: true,
+          labelPosition: "below-icon",
+          labelStyle: { fontSize: hp(1.7) },
+          style: { height: hp(5.8) }
+        }}
+      >
         <Tab.Screen
           name="Female Users"
           component={UsersStack}
-          options={{ tabBarIcon: ({ color }) => <Icon name="female" size={25} color={color} />, title: strings.femaleUsersScreenName }}
+          options={{ tabBarIcon: ({ color }) => <Icon name="female" size={hp(2.5)} color={color} />, title: strings.femaleUsersScreenName }}
         />
         <Tab.Screen
           name="Male Users"
           component={UsersStack}
-          options={{ tabBarIcon: ({ color }) => <Icon name="male" size={25} color={color} />, title: strings.maleUsersScreenName }}
+          options={{ tabBarIcon: ({ color }) => <Icon name="male" size={hp(2.5)} color={color} />, title: strings.maleUsersScreenName }}
         />
         <Tab.Screen
-          name="AuthTabs"
-          component={AuthTabs}
-          options={{ tabBarIcon: ({ color }) => <Icon name="info-circle" size={25} color={color} />, title: strings.info }}
+          name="Search"
+          component={UsersStack}
+          options={{ tabBarIcon: ({ color }) => <Icon name="search" size={hp(2.5)} color={color} />, title: strings.search }}
         />
       </Tab.Navigator>
     </>
@@ -52,11 +62,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  }
-});

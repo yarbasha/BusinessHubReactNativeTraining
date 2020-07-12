@@ -6,13 +6,13 @@ const initState = {
   err: {}
 };
 
-export default function femaleUsers(state = initState, action) {
+export default function foundUsers(state = initState, action) {
   switch (action.type) {
-    case ActionTypes.FETCH_FEMALE_USERS_LOADING:
+    case ActionTypes.FIND_USERS_LOADING:
       return { isLoading: true, users: [], err: {} };
-    case ActionTypes.FETCH_FEMALE_USERS_SUCCESS:
+    case ActionTypes.FIND_USERS_SUCCESS:
       return { isLoading: false, users: action.data, err: {} }
-    case ActionTypes.FETCH_FEMALE_USERS_FAILED:
+    case ActionTypes.FIND_USERS_FAILED:
       return { isLoading: false, users: [], err: action.err }
     default:
       return state;

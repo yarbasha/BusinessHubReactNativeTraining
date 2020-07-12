@@ -4,19 +4,36 @@ import logger from 'redux-logger';
 import maleUsers from './reducers/maleUsers';
 import femaleUsers from './reducers/femaleUsers';
 import language from './reducers/language';
+import auth from './reducers/auth';
+import foundUsers from './reducers/foundUsers';
+import { persistCombineReducers, persistStore } from 'redux-persist';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import AsyncStorage from '@react-native-community/async-storage';
 
 let middleware = [thunk];
 
 // if (__DEV__) {
 //   middleware.push(logger);
 // }
-const store = createStore(
-  combineReducers({
+
+const persistConfig = {
+  key: "root",
+  storage: AsyncStorage,
+  whitelist: ['language']
+}
+
+export const store = createStore(
+  persistCombineReducers(persistConfig, {
     maleUsers,
     femaleUsers,
-    language
+    language,
+    auth,
+    foundUsers
   }),
-  applyMiddleware(...middleware)
+  composeWithDevTools(
+    applyMiddleware(...middleware)
+  )
 );
 
-export default store;
+export const persistor = persistStore(store);
+

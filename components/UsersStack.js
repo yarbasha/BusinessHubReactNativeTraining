@@ -2,27 +2,26 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Users from './Users';
 import UserDetails from './UserDetails';
-import Header from './Header';
 import strings from '../localization/strings';
 
 const Stack = createStackNavigator();
 
-export default function UsersStack(props) {
+export default function UsersStack({ route }) {
   let screenName;
-  if (props.route.name == "Female Users") {
+  if (route.name == "Female Users") {
     screenName = strings.femaleUsersScreenName;
   }
-  else if (props.route.name == "Male Users") {
+  else if (route.name == "Male Users") {
     screenName = strings.maleUsersScreenName;
   }
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={props.route.name}
+        name={route.name}
         component={Users}
         options={{
           title: screenName,
-          header: () => null
+          headerShown: false
         }}
       />
       <Stack.Screen
@@ -30,7 +29,7 @@ export default function UsersStack(props) {
         component={UserDetails}
         options={{
           title: strings.userDetails,
-          header: () => null
+          headerShown: false
         }}
       />
     </Stack.Navigator>

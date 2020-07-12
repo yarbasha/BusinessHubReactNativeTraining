@@ -1,37 +1,47 @@
 import React from 'react';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { StyleSheet } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import strings from '../localization/strings';
-import Login from './Login';
 import Signup from './Signup';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import AuthStack from './AuthStack';
+import { globalStyles } from '../src/styles/styles';
 
-
-const Tab = createMaterialTopTabNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function AuthTabs() {
   return (
     <>
-      <Tab.Navigator tabBarOptions={{ activeTintColor: "#69a4d8", tabStyle: styles.container, showIcon: true, iconStyle: { height: 10 } }}>
+      <Tab.Navigator
+        swipeEnabled={false}
+        tabBarPosition="bottom"
+        tabBarOptions={{
+          activeTintColor: "#69a4d8",
+          tabStyle: globalStyles.tabContainer,
+          keyboardHidesTabBar: true,
+          showIcon: true,
+          iconStyle: { height: hp(2.3) },
+          labelStyle: { fontSize: hp(1.8) },
+          style: { height: hp(7.5), justifyContent: "center" }
+        }}
+      >
         <Tab.Screen
           name="Login"
-          component={Login}
-          options={{ title: strings.login, tabBarIcon: ({ color }) => <Icon name="sign-in" size={15} color={color} /> }}
+          component={AuthStack}
+          options={{
+            title: strings.login,
+            tabBarIcon: ({ color }) => <Icon name="sign-in" size={hp(2.3)} color={color} />
+          }}
         />
         <Tab.Screen
           name="Signup"
           component={Signup}
-          options={{ title: strings.signup, tabBarIcon: ({ color }) => <Icon name="user-plus" size={15} color={color} /> }}
+          options={{
+            title: strings.signup,
+            tabBarIcon: ({ color }) => <Icon name="user-plus" size={hp(2.3)} color={color} />
+          }}
         />
       </Tab.Navigator>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  }
-});

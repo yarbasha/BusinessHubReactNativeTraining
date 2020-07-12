@@ -21,7 +21,15 @@ let strings = new LocalizedStrings({
     emailInvalid: "الإيميل المدخل غير صالح!",
     passwordShort: "ستة أحرف على الأقل",
     signupForUs: "سجل لدينا في التطبيق!",
-    hasAccount: "لديك حساب مسبقاً!"
+    hasAccount: "لديك حساب مسبقاً!",
+    settings: "الإعدادات",
+    favoriteLanguage: "الرجاء، اختر لغتك المفضلة:",
+    search: "البحث",
+    forgetPasswordMessage: "نسيت كلمة المرور؟",
+    confirm: "تأكيد",
+    backToLogin: "العودة إلى تسجيل الدخول!",
+    loggedIn: "تم تسجيل الدخول بنجاح!",
+    logout: "تسجيل الخروج"
   },
   en: {
     how: "how are you?",
@@ -43,8 +51,15 @@ let strings = new LocalizedStrings({
     emailInvalid: "Inavalid email!",
     passwordShort: "At least 6 chatacters",
     signupForUs: "Sign up for us!",
-    hasAccount: "Already have an account!"
-
+    hasAccount: "Already have an account!",
+    settings: "Settings",
+    favoriteLanguage: "Please, Select your favorite language:",
+    search: "Search",
+    forgetPasswordMessage: "Forget your password?",
+    confirm: "Confirm",
+    backToLogin: "Back To Login!",
+    loggedIn: "You are Logged In!",
+    logout: "Log out"
   }
 });
 
