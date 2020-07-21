@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "251311689051",
+    "firebase_url": "https://rntraining-b9e80.firebaseio.com",
+    "project_id": "rntraining-b9e80",
+    "storage_bucket": "rntraining-b9e80.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:251311689051:android:9cdbd28720b54510571e7e",
+        "android_client_info": {
+          "package_name": "com.businesshubreactnativetraining"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "251311689051-60nlrauj6me9tr4p639ru6tuunajrj0u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzyEZXAqkoo7Sdo4X4uIolZcoqPcAxsgA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "251311689051-60nlrauj6me9tr4p639ru6tuunajrj0u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
