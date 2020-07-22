@@ -1,8 +1,9 @@
 
 const colors = {
-  primary: "#69a4d8",
-  secondary: "",
-  background: "#eee",
+  primary: "#2d88ff",
+  secondary: "#e4e6ebe8",
+  background: "#d4ddee",
+  drawerBackground: "#d4ddeedd",
   active: "",
   touchText: "#fff",
   error: "red",

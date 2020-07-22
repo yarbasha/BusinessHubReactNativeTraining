@@ -24,12 +24,30 @@ export const settingsStyle = StyleSheet.create({
   },
   text: {
     color: colors.primary,
-    fontSize: wp(5)
+    fontSize: hp(2.8)
   },
   touchText: {
     color: colors.primary,
-    fontSize: wp(4),
+    fontSize: hp(2.5),
     textDecorationLine: "underline"
+  },
+  logoutContainer: {
+    alignItems: "center",
+    borderTopColor: colors.primary,
+    borderTopWidth: 1
+  },
+  logoutTouch: {
+    borderWidth: 1,
+    borderColor: colors.primary,
+    backgroundColor: colors.primary,
+    paddingVertical: hp(1),
+    paddingHorizontal: wp(5),
+    borderRadius: wp(20),
+    marginTop: hp(4)
+  },
+  logoutTouchText: {
+    color: colors.secondary,
+    fontSize: hp(3),
   }
 });
 
@@ -59,11 +77,10 @@ export const usersStyle = StyleSheet.create({
 
 export const cardStyle = StyleSheet.create({
   container: {
+    height: wp('20%'),
     marginHorizontal: wp('2.8%'),
     marginVertical: hp('0.6%'),
     borderRadius: wp('5%'),
-    borderBottomLeftRadius: wp('10%'),
-    borderTopRightRadius: wp('10%'),
     backgroundColor: colors.background,
     elevation: 12,
     shadowColor: colors.shadow,
@@ -74,9 +91,7 @@ export const cardStyle = StyleSheet.create({
   avatar: {
     width: wp('20%'),
     height: wp('20%'),
-    borderRadius: wp('5%'),
-    borderTopRightRadius: wp('10%'),
-    borderBottomLeftRadius: wp('10%')
+    borderRadius: wp('5%')
   },
   body: {
     flexGrow: 1,
@@ -92,6 +107,13 @@ export const cardStyle = StyleSheet.create({
   errorContainer: {
     marginTop: hp('4%'),
     alignItems: "center"
+  },
+  background: {
+    width: '100%',
+    height: '100%'
+  },
+  backgroundImage: {
+    borderRadius: wp(5)
   }
 });
 
@@ -113,9 +135,11 @@ export const headerStyle = StyleSheet.create({
   },
   input: {
     borderRadius: wp(10),
-    paddingHorizontal: wp('3%'),
-    fontSize: hp('1.5%'),
-    backgroundColor: colors.background,
+    paddingHorizontal: wp(3),
+    fontSize: hp(1.5),
+    // backgroundColor: colors.background,
+    borderColor: colors.primary,
+    borderWidth: 0.7,
     width: wp(84),
     height: hp(4.5),
     marginHorizontal: wp(3)
@@ -124,8 +148,9 @@ export const headerStyle = StyleSheet.create({
 
 export const forgetPasswordStyle = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     marginHorizontal: wp('4%'),
+    // justifyContent: "center"
   },
   input: {
     borderWidth: 0.7,
@@ -164,7 +189,9 @@ export const forgetPasswordStyle = StyleSheet.create({
     width: wp('35%'),
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 50
+    borderRadius: wp(20),
+    borderColor: colors.primary,
+    borderWidth: 1
   },
   touchText: {
     color: colors.touchText,
@@ -177,11 +204,30 @@ export const forgetPasswordStyle = StyleSheet.create({
 
 export const authStyle = StyleSheet.create({
   container: {
-    flex: 1,
-    marginHorizontal: wp('4%'),
+    flexGrow: 1,
+    backgroundColor: colors.primary
+    // marginHorizontal: wp('4%'),
+    // justifyContent: "center"
+  },
+  imageContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: hp(2.2)
+  },
+  image: {
+    height: hp(15),
+    width: wp(76)
+  },
+  contentContainer: {
+    backgroundColor: colors.secondary,
+    flexGrow: 1,
+    borderTopLeftRadius: wp(13),
+    borderTopRightRadius: wp(13),
+    paddingHorizontal: wp(10),
+    paddingTop: hp(5.5)
   },
   input: {
-    borderWidth: 0.7,
+    borderWidth: 0.5,
     borderColor: colors.primary,
     borderRadius: 10,
     paddingHorizontal: wp('4%'),
@@ -217,10 +263,12 @@ export const authStyle = StyleSheet.create({
     width: wp('35%'),
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 50
+    borderRadius: wp(20),
+    borderWidth: 1,
+    borderColor: colors.primary
   },
   touchText: {
-    color: colors.touchText,
+    color: colors.primary,
     fontSize: hp('2.5%')
   },
   errorTextContainer: {
@@ -236,9 +284,6 @@ export const userDetailsStyle = StyleSheet.create({
     borderRadius: wp('8%'),
     backgroundColor: colors.background,
     height: hp('30%'),
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
     elevation: 12,
     shadowColor: colors.shadow,
     shadowOffset: {
@@ -268,5 +313,158 @@ export const userDetailsStyle = StyleSheet.create({
   errorContainer: {
     marginTop: hp('4%'),
     alignItems: "center"
+  },
+  background: {
+    width: '100%',
+    height: '100%',
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  backgroundImage: {
+    borderRadius: wp(5)
   }
 });
+
+export const paginationCardStyle = StyleSheet.create({
+  container: {
+    height: hp(30),
+    marginHorizontal: wp('2.8%'),
+    marginVertical: hp('0.6%'),
+    borderRadius: wp('5%'),
+    backgroundColor: colors.background,
+    elevation: 12,
+    shadowColor: colors.shadow,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: wp(5),
+  },
+  text: {
+    fontSize: hp(2.5),
+    color: colors.primary
+  },
+  endText: {
+    textAlign: "center",
+    color: colors.primary,
+    fontSize: hp(2)
+  },
+  background: {
+    width: '100%',
+    height: '100%',
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  backgroundImage: {
+    borderRadius: wp(5)
+  }
+});
+
+export const chatStyle = StyleSheet.create({
+  container: {
+    marginHorizontal: 5,
+    flexGrow: 1,
+    justifyContent: "flex-end",
+    marginHorizontal: wp('2.8%')
+  },
+  footer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginHorizontal: wp('2.8%')
+  },
+  input: {
+    width: '90%',
+    minHeight: hp(5),
+    lineHeight: hp(2.5),
+    borderWidth: 0.7,
+    borderColor: colors.primary,
+    borderRadius: wp(2.6),
+    paddingVertical: hp(0.5),
+    paddingHorizontal: wp(4),
+    fontSize: hp('2%'),
+    marginVertical: hp('1%'),
+    marginRight: wp(1.5)
+  }
+})
+
+export const messageStyle = StyleSheet.create({
+  container: {
+    backgroundColor: colors.primary,
+    marginBottom: 2,
+    borderRadius: wp(2.6),
+    borderTopLeftRadius: 0,
+    marginLeft: 8,
+    paddingHorizontal: 5,
+    paddingBottom: 2,
+    alignSelf: "flex-start"
+  },
+  sender: {
+    fontSize: hp(1.5),
+    color: colors.secondary
+  },
+  body: {
+    flexDirection: "row",
+    flexWrap: 'wrap'
+  },
+  text: {
+    fontSize: hp(2.5),
+    marginRight: 10,
+    color: colors.secondary
+  },
+  time: {
+    fontSize: hp(1.5),
+    textAlignVertical: "bottom",
+    color: colors.secondary
+  }
+});
+
+export const toastStyle = StyleSheet.create({
+  container: {
+    position: "absolute",
+    bottom: hp(15),
+    left: '50%'
+  },
+  textContainer: {
+    position: "relative",
+    left: '-50%',
+    backgroundColor: colors.primary,
+    borderRadius: wp(4),
+    paddingHorizontal: wp(3),
+    paddingVertical: hp(1.5)
+  },
+  text: {
+    fontSize: hp(2.2),
+    color: colors.secondary
+  }
+});
+
+export const drawerContentStyle = StyleSheet.create({
+  header: {
+    borderBottomColor: colors.primary,
+    borderBottomWidth: 0.7,
+    paddingVertical: hp(3.5),
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  sectionOne: {
+    borderBottomColor: colors.primary,
+    borderBottomWidth: 0.7,
+    paddingVertical: hp(3)
+  },
+  sectionTwo: {
+    paddingVertical: hp(3)
+  },
+  image: {
+    width: wp(25),
+    height: wp(25),
+    borderRadius: wp(12.5),
+    marginBottom: hp(1),
+  },
+  text: {
+    fontSize: hp(2),
+    color: colors.primary
+  }
+})
