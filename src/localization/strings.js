@@ -31,7 +31,10 @@ let strings = new LocalizedStrings({
     logout: "تسجيل الخروج",
     email: "البريد الإلكتروني: ",
     endList: "نهاية القائمة!",
-    chat: "محادثة"
+    chat: "محادثة",
+    topics: "المواضيع",
+    contactus: "التواصل",
+    privacy: "الخصوصية"
   },
   en: {
     searchForUser: "Search for User...",
@@ -63,7 +66,10 @@ let strings = new LocalizedStrings({
     logout: "Log out",
     email: "Email Address: ",
     endList: "End of the List!",
-    chat: "Chat"
+    chat: "Chat",
+    topics: "Topics",
+    contactus: "Contanct Us",
+    privacy: "Privacy"
   }
 });
 

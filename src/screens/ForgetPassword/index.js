@@ -3,14 +3,13 @@ import { View, Text, TextInput, Keyboard, TouchableOpacity, ActivityIndicator } 
 import { useFormik } from 'formik';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
-import strings from '../localization/strings';
+import strings from '../../localization/strings';
 import { useNavigation } from '@react-navigation/native';
-import Toast from '../components/Toast';
-import { authStyle } from '../styles/styles';
-import colors from '../styles/colors';
-import { forgetPassword } from '../redux/actions/usersActions';
+import Toast from '../../components/Toast';
+import { styles } from './styles';
+import colors from '../../styles/colors';
+import { forgetPassword } from '../../redux/actions/usersActions';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Icon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 
 function ForgetPassword(props) {
@@ -37,42 +36,42 @@ function ForgetPassword(props) {
 
   return (
     <>
-      <KeyboardAwareScrollView keyboardShouldPersistTaps="always" contentContainerStyle={authStyle.container}>
-        <View style={authStyle.imageContainer}>
+      <KeyboardAwareScrollView keyboardShouldPersistTaps="always" contentContainerStyle={styles.container}>
+        <View style={styles.imageContainer}>
           <FastImage
             resizeMode="contain"
-            style={authStyle.image}
-            source={require('../images/BHLogo.png')}
+            style={styles.image}
+            source={require('../../images/BHLogo.png')}
           />
         </View>
-        <View style={authStyle.contentContainer}>
+        <View style={styles.contentContainer}>
           <TextInput
-            style={[(errors.email && touched.email) ? authStyle.inputError : authStyle.input, { textAlign: props.language == "en" ? "left" : "right" }]}
+            style={[(errors.email && touched.email) ? styles.inputError : styles.input, { textAlign: props.language == "en" ? "left" : "right" }]}
             onChangeText={handleChange('email')}
             onBlur={handleBlur('email')}
             value={values.email}
             placeholder={strings.enterEmail}
           />
-          <View style={authStyle.errorTextContainer}>
-            {(errors.email && touched.email) && <Text style={authStyle.errorText}>{errors.email}</Text>}
+          <View style={styles.errorTextContainer}>
+            {(errors.email && touched.email) && <Text style={styles.errorText}>{errors.email}</Text>}
           </View>
-          <View style={authStyle.btnContainer}>
-            <TouchableOpacity onPress={handleSubmit} style={[authStyle.touchButton, { backgroundColor: disabled ? null : colors.primary }]} disabled={disabled}>
+          <View style={styles.btnContainer}>
+            <TouchableOpacity onPress={handleSubmit} style={[styles.touchButton, { backgroundColor: disabled ? null : colors.primary }]} disabled={disabled}>
               {isLoading ? <ActivityIndicator size="small" color={colors.primary} />
-                : <Text style={[authStyle.touchText, { color: disabled ? colors.primary : colors.secondary }]}>{strings.confirm}</Text>
+                : <Text style={[styles.touchText, { color: disabled ? colors.primary : colors.secondary }]}>{strings.confirm}</Text>
               }
             </TouchableOpacity>
           </View>
-          <View style={authStyle.btnContainer}>
+          <View style={styles.btnContainer}>
             <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-              <Text style={authStyle.bottomText}>{strings.backToLogin}</Text>
+              <Text style={styles.bottomText}>{strings.backToLogin}</Text>
             </TouchableOpacity>
           </View>
         </View>
       </KeyboardAwareScrollView>
-      {props.errMess.error && <Toast
+      {props.errMess && <Toast
         duration={3000}
-        text={props.errMess.error}
+        text={props.errMess}
       />}
     </>
   );

@@ -6,17 +6,17 @@
  * @flow strict-local
  */
 
-import React, { useEffect, useState } from 'react';
-import { Provider, useDispatch } from 'react-redux';
+import React from 'react';
+import { Provider } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen'
 import { store, persistor } from './src/redux/store';
 import Loading from './src/components/Loading';
 import { NavigationContainer } from '@react-navigation/native';
 import { PersistGate } from 'redux-persist/integration/react';
 import Main from './src/navigations/Main';
-import Test from './src/components/Test';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, StatusBar } from 'react-native';
 import Background from './src/components/Background';
+import colors from './src/styles/colors';
 
 
 
@@ -27,10 +27,10 @@ const App = () => {
       <Provider store={store}>
         <PersistGate onBeforeLift={() => SplashScreen.hide()} loading={<Loading />} persistor={persistor}>
           <NavigationContainer>
+            <StatusBar backgroundColor={colors.primary} />
             <SafeAreaView style={{ flex: 1 }}>
               <Background>
                 <Main />
-                {/* <Test /> */}
               </Background>
             </SafeAreaView>
           </NavigationContainer>

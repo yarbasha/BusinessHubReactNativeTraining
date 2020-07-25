@@ -2,11 +2,12 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import strings from '../localization/strings';
 import Signup from '../screens/Signup';
-import Icon from 'react-native-vector-icons/FontAwesome';
+// import Icon from 'react-native-vector-icons/FontAwesome';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import AuthStack from '../navigations/AuthStack';
 import { globalStyles } from '../styles/styles';
 import colors from '../styles/colors';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 
 
@@ -33,7 +34,7 @@ export default function AuthTabs() {
           component={AuthStack}
           options={{
             title: strings.login,
-            tabBarIcon: ({ color }) => <Icon name="sign-in" size={hp(2.3)} color={color} />
+            tabBarIcon: ({ color }) => <Icon name="log-in-outline" size={hp(3)} color={color} />
           }}
         />
         <Tab.Screen
@@ -41,7 +42,7 @@ export default function AuthTabs() {
           component={Signup}
           options={{
             title: strings.signup,
-            tabBarIcon: ({ color }) => <Icon name="user-plus" size={hp(2.3)} color={color} />
+            tabBarIcon: ({ color }) => <Icon name="person-add-outline" size={hp(3)} color={color} />
           }}
         />
       </Tab.Navigator>

@@ -1,6 +1,6 @@
 import * as ActionTypes from '../ActionTypes';
 import messaging from '@react-native-firebase/messaging';
-import { pathUrl } from '../../../config';
+import { pathUrl } from '../../config';
 
 export const fetchFemaleUsers = () => (dispatch) => {
   dispatch({ type: ActionTypes.FETCH_FEMALE_USERS_LOADING });
@@ -66,15 +66,7 @@ export const loginUser = (values) => async (dispatch) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(values)
-  })
-    .then(response => {
-      if (response.ok) return response.json();
-      else {
-        var error = new Error('Error' + response.status + ':' + response.statusText);
-        error.response = response;
-        throw error;
-      }
-    })
+  }).then(response => response.json())
     .then(data => {
       if (data.error) {
         var error = new Error('Error' + data.status + ':' + data.statusText);
@@ -86,7 +78,7 @@ export const loginUser = (values) => async (dispatch) => {
         dispatch({ type: ActionTypes.SET_DEVICE_TOKEN, fcm });
       }
     })
-    .catch(err => dispatch({ type: ActionTypes.LOGIN_USER_FAILED, err }));
+    .catch(error => dispatch({ type: ActionTypes.LOGIN_USER_FAILED, error }));
 };
 
 export const logout = () => (dispatch) => {
@@ -105,14 +97,7 @@ export const signupUser = (values) => async (dispatch) => {
     },
     body: JSON.stringify(values)
   })
-    .then(response => {
-      if (response.ok) return response.json();
-      else {
-        var error = new Error('Error' + response.status + ':' + response.statusText);
-        error.response = response;
-        throw error;
-      }
-    })
+    .then(response => response.json())
     .then(data => {
       if (data.error) {
         var error = new Error('Error' + data.status + ':' + data.statusText);
@@ -137,22 +122,15 @@ export const forgetPassword = (values) => (dispatch) => {
   })
     .then(response => {
       if (response.ok) return response.json();
-      else {
-        var error = new Error('Error' + response.status + ':' + response.statusText);
-        error.response = response;
-        throw error;
-      }
+      else throw response.json();
     })
     .then(data => {
-      if (data.error.length > 13) {
-        var err = new Error(data.error);
-        throw err;
-      }
-      else {
-        dispatch({ type: ActionTypes.FORGET_PASSWORD_SUCCESS, success: data });
-      }
+      dispatch({ type: ActionTypes.FORGET_PASSWORD_SUCCESS, success: data.error });
     })
-    .catch(err => dispatch({ type: ActionTypes.FORGET_PASSWORD_FAILED, error: { error: err.message } }));
+    .catch(async (err) => {
+      const error = await err;
+      dispatch({ type: ActionTypes.FORGET_PASSWORD_FAILED, error: error.error })
+    })
 };
 
 export const paginationUsers = (page, limit) => (dispatch) => {

@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, ActivityIndicator, ImageBackground } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, FlatList, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import { paginationUsers, refreshPaginationUsers } from '../redux/actions/usersActions';
-import { paginationCardStyle } from '../styles/styles';
+import { paginationUsers, refreshPaginationUsers } from '../../redux/actions/usersActions';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import PaginationCard from '../components/PaginationCard';
-import Header from '../components/Header';
-import strings from '../localization/strings';
-import colors from '../styles/colors';
-import Background from '../components/Background';
+import PaginationCard from '../../components/PaginationCard';
+import Header from '../../components/Header';
+import strings from '../../localization/strings';
+import colors from '../../styles/colors';
+import Background from '../../components/Background';
 
 
 function PaginationUsers(props) {
@@ -28,7 +27,6 @@ function PaginationUsers(props) {
           onEndReachedThreshold={0.1}
           onEndReached={() => props.fetchPaginationUsers(props.page, props.limit)}
           ListFooterComponent={() => {
-            if (props.ended) return <Text style={paginationCardStyle.endText}>{strings.endList}</Text>
             if (props.isLoading) return <ActivityIndicator color={colors.primary} size={hp(8)} />
             return null
           }}

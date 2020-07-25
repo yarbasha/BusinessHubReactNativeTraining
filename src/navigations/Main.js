@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Text, StyleSheet } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Home from './Home';
 import { connect } from 'react-redux';
@@ -9,8 +10,9 @@ import Chat from '../screens/Chat';
 import { fcmService } from '../services/FCMService';
 import { localNotificationService } from '../services/LocalNotificationService';
 import DrawerContent from '../components/DrawerContent';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../styles/colors';
+import { globalStyles } from '../styles/styles';
 
 const Drawer = createDrawerNavigator();
 
@@ -66,7 +68,7 @@ function Main(props) {
             itemStyle: { marginVertical: 5 },
             activeBackgroundColor: colors.primary,
             activeTintColor: colors.secondary,
-            inactiveTintColor: colors.primary
+            inactiveTintColor: colors.primary,
           }}
           drawerStyle={{ backgroundColor: colors.drawerBackground, width: '75%' }}
         >
@@ -75,7 +77,8 @@ function Main(props) {
             component={Home}
             options={{
               title: strings.home,
-              drawerIcon: ({ color, size }) => <Icon name="home" size={size} color={color} />,
+              drawerIcon: ({ color, size }) => <Icon style={props.language == "ar" && globalStyles.rightDrawerIcon} name="home-outline" size={size} color={color} />,
+              drawerLabel: ({ color }) => <Text style={[{ color }, props.language == "ar" && globalStyles.rightDrawerLabel]}>{strings.home}</Text>
             }}
           />
           <Drawer.Screen
@@ -83,7 +86,8 @@ function Main(props) {
             component={Settings}
             options={{
               title: strings.settings,
-              drawerIcon: ({ color, size }) => <Icon name="cog" size={size} color={color} />
+              drawerIcon: ({ color, size }) => <Icon style={props.language == "ar" && globalStyles.rightDrawerIcon} name="settings-outline" size={size} color={color} />,
+              drawerLabel: ({ color }) => <Text style={[{ color }, props.language == "ar" && globalStyles.rightDrawerLabel]}>{strings.settings}</Text>
             }}
           />
           <Drawer.Screen
@@ -91,7 +95,8 @@ function Main(props) {
             component={Chat}
             options={{
               title: strings.chat,
-              drawerIcon: ({ color, size }) => <Icon name="comments" size={size} color={color} />
+              drawerIcon: ({ color, size }) => <Icon style={props.language == "ar" && globalStyles.rightDrawerIcon} name="chatbox-outline" size={size} color={color} />,
+              drawerLabel: ({ color }) => <Text style={[{ color }, props.language == "ar" && globalStyles.rightDrawerLabel]}>{strings.chat}</Text>
             }}
           />
         </Drawer.Navigator>

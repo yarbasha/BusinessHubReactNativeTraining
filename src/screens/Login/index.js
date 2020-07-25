@@ -1,16 +1,15 @@
 import React from 'react';
-import { View, Text, TextInput, Keyboard, TouchableOpacity, ActivityIndicator, ImageBackground } from 'react-native';
+import { View, Text, TextInput, Keyboard, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useFormik } from 'formik';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
-import strings from '../localization/strings';
+import strings from '../../localization/strings';
 import { useNavigation } from '@react-navigation/native';
-import { authStyle } from '../styles/styles';
-import colors from '../styles/colors';
-import { loginUser } from '../redux/actions/usersActions';
+import { styles } from './styles';
+import colors from '../../styles/colors';
+import { loginUser } from '../../redux/actions/usersActions';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Toast from '../components/Toast';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Toast from '../../components/Toast';
 import FastImage from 'react-native-fast-image';
 
 function Login(props) {
@@ -38,56 +37,56 @@ function Login(props) {
 
   return (
     <>
-      <KeyboardAwareScrollView keyboardShouldPersistTaps="always" contentContainerStyle={authStyle.container}>
-        <View style={authStyle.imageContainer}>
+      <KeyboardAwareScrollView keyboardShouldPersistTaps="always" contentContainerStyle={styles.container}>
+        <View style={styles.imageContainer}>
           <FastImage
             resizeMode="contain"
-            style={authStyle.image}
-            source={require('../images/BHLogo.png')}
+            style={styles.image}
+            source={require('../../images/BHLogo.png')}
           />
         </View>
-        <View style={authStyle.contentContainer}>
+        <View style={styles.contentContainer}>
           <TextInput
-            style={[(errors.email && touched.email) ? authStyle.inputError : authStyle.input, { textAlign: props.language == "en" ? "left" : "right" }]}
+            style={[(errors.email && touched.email) ? styles.inputError : styles.input, { textAlign: props.language == "en" ? "left" : "right" }]}
             onChangeText={handleChange('email')}
             onBlur={handleBlur('email')}
             value={values.email}
             placeholder={strings.enterEmail}
           />
-          <View style={authStyle.errorTextContainer}>
-            {(errors.email && touched.email) && <Text style={authStyle.errorText}>{errors.email}</Text>}
+          <View style={styles.errorTextContainer}>
+            {(errors.email && touched.email) && <Text style={styles.errorText}>{errors.email}</Text>}
           </View>
           <TextInput
-            style={[(errors.password && touched.password) ? authStyle.inputError : authStyle.input, { textAlign: props.language == "en" ? "left" : "right" }]}
+            style={[(errors.password && touched.password) ? styles.inputError : styles.input, { textAlign: props.language == "en" ? "left" : "right" }]}
             onChangeText={handleChange('password')}
             onBlur={handleBlur('password')}
             value={values.password}
             placeholder={strings.enterPassword}
             secureTextEntry
           />
-          <View style={authStyle.errorTextContainer}>
-            {(errors.password && touched.password) && <Text style={authStyle.errorText}>{errors.password}</Text>}
+          <View style={styles.errorTextContainer}>
+            {(errors.password && touched.password) && <Text style={styles.errorText}>{errors.password}</Text>}
           </View>
-          <View style={authStyle.btnContainer}>
-            <TouchableOpacity onPress={handleSubmit} style={[authStyle.touchButton, { backgroundColor: disabled ? null : colors.primary }]} disabled={disabled}>
+          <View style={styles.btnContainer}>
+            <TouchableOpacity onPress={handleSubmit} style={[styles.touchButton, { backgroundColor: disabled ? null : colors.primary }]} disabled={disabled}>
               {isLoading ? <ActivityIndicator size="small" color={colors.primary} />
-                : <Text style={[authStyle.touchText, { color: disabled ? colors.primary : colors.secondary }]}>{strings.login}</Text>
+                : <Text style={[styles.touchText, { color: disabled ? colors.primary : colors.secondary }]}>{strings.login}</Text>
               }
             </TouchableOpacity>
           </View>
-          <View style={authStyle.btnContainer}>
+          <View style={styles.touchContainer}>
             <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-              <Text style={authStyle.bottomText}>{strings.signupForUs}</Text>
+              <Text style={styles.bottomText}>{strings.signupForUs}</Text>
             </TouchableOpacity>
           </View>
-          <View style={authStyle.btnContainer}>
+          <View style={styles.touchContainer}>
             <TouchableOpacity onPress={() => navigation.navigate("ForgetPassword")}>
-              <Text style={authStyle.bottomText}>{strings.forgetPasswordMessage}</Text>
+              <Text style={styles.bottomText}>{strings.forgetPasswordMessage}</Text>
             </TouchableOpacity>
           </View>
         </View>
       </KeyboardAwareScrollView>
-      {props.user.loginErr.response && <Toast
+      {props.user.loginErr && <Toast
         duration={3000}
         text={props.user.loginErr.response.error}
       />}

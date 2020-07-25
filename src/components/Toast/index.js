@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Animated } from 'react-native';
-import { toastStyle } from '../styles/styles';
+import { styles } from './styles';
+import { useDispatch } from 'react-redux';
+import { CLEAR_AUTH_ERROR } from '../../redux/ActionTypes';
 
 export default function Toast(props) {
   const [visible, setVisible] = useState(true);
   const opacity = useState(new Animated.Value(0))[0];
+  const dispatch = useDispatch();
 
   Animated.timing(opacity, {
     toValue: 1,
@@ -23,14 +26,15 @@ export default function Toast(props) {
 
     setTimeout(() => {
       setVisible(false);
+      dispatch({ type: CLEAR_AUTH_ERROR });
     }, props.duration + 700);
   }, []);
 
   return (
     <>
-      {visible && <Animated.View style={[toastStyle.container, { opacity }]}>
-        <View style={toastStyle.textContainer}>
-          <Text style={toastStyle.text}>{props.text}</Text>
+      {visible && <Animated.View style={[styles.container, { opacity }]}>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>{props.text}</Text>
         </View>
       </Animated.View>}
     </>

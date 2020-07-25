@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, FlatList } from 'react-native';
-import Card from '../components/Card';
-import Loading from '../components/Loading';
-import { fetchMaleUsers, fetchFemaleUsers, findUsers } from '../redux/actions/usersActions';
+import { FlatList } from 'react-native';
+import Card from '../../components/Card';
+import Loading from '../../components/Loading';
+import { fetchMaleUsers, fetchFemaleUsers, findUsers } from '../../redux/actions/usersActions';
 import { connect } from 'react-redux';
-import strings from '../localization/strings';
-import { language } from '../redux/actions/languageAction';
-import Header from '../components/Header';
+import strings from '../../localization/strings';
+import { language } from '../../redux/actions/languageAction';
+import Header from '../../components/Header';
 import { useRoute } from '@react-navigation/native';
-import Background from '../components/Background';
+import Background from '../../components/Background';
 
 function Users(props) {
   const route = useRoute();

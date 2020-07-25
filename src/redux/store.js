@@ -7,6 +7,7 @@ import language from './reducers/language';
 import auth from './reducers/auth';
 import foundUsers from './reducers/foundUsers';
 import paginationUsers from './reducers/paginationUsers';
+import chat from './reducers/chat';
 import { persistCombineReducers, persistStore } from 'redux-persist';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -30,7 +31,8 @@ export const store = createStore(
     language,
     auth,
     foundUsers,
-    paginationUsers
+    paginationUsers,
+    chat
   }),
   composeWithDevTools(
     applyMiddleware(...middleware)
