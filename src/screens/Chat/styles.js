@@ -16,6 +16,7 @@ export const styles = StyleSheet.create({
   },
   input: {
     width: '90%',
+    color: colors.primary,
     minHeight: hp(5),
     lineHeight: hp(2.5),
     borderWidth: 0.7,

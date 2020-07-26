@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, TouchableOpacity, DevSettings } from 'react-native';
 import { connect } from 'react-redux';
 import Header from '../../components/Header';
 import strings from '../../localization/strings';
@@ -7,16 +7,28 @@ import { language } from '../../redux/actions/languageAction';
 import { styles } from './styles';
 import { logout } from '../../redux/actions/usersActions';
 import Background from '../../components/Background';
+import ActionSheet from 'react-native-actionsheet';
 
 function Settings(props) {
 
-  const handleLanguage = (val) => {
-    props.languageAction(val);
-    strings.setLanguage(val);
+  const languageActionSheet = useRef();
+  const logoutActionSheet = useRef();
+
+  const handleLanguage = (index) => {
+    if (index == 0 && props.language != "en") {
+      props.languageAction("en");
+      strings.setLanguage("en");
+    } else if (index == 1 && props.language != "ar") {
+      props.languageAction("ar");
+      strings.setLanguage("ar");
+      DevSettings.reload();
+    }
   };
 
-  const handleLogout = () => {
-    props.logout();
+  const handleLogout = (index) => {
+    if (index == 0) {
+      props.logout();
+    }
   };
 
   return (
@@ -25,17 +37,28 @@ function Settings(props) {
       <View style={styles.container}>
         <Text style={styles.text}>{strings.favoriteLanguage}</Text>
         <View style={styles.btnContainer}>
-          <TouchableOpacity onPress={() => handleLanguage("en")}>
-            <Text style={styles.touchText}>English</Text>
+          <TouchableOpacity onPress={() => languageActionSheet.current.show()}>
+            <Text style={styles.touchText}>{strings.clickHere}</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleLanguage("ar")}>
-            <Text style={styles.touchText}>عربي</Text>
-          </TouchableOpacity>
+          <ActionSheet
+            ref={languageActionSheet}
+            title={strings.actionSheetTitle}
+            options={["English", "العربية", <Text style={{ color: "red", fontSize: 18 }}>{strings.cancel}</Text>]}
+            cancelButtonIndex={2}
+            onPress={(index) => handleLanguage(index)}
+          />
         </View>
         <View style={styles.logoutContainer}>
-          <TouchableOpacity onPress={handleLogout} style={styles.logoutTouch}>
+          <TouchableOpacity onPress={() => logoutActionSheet.current.show()} style={styles.logoutTouch}>
             <Text style={styles.logoutTouchText}>{strings.logout}</Text>
           </TouchableOpacity>
+          <ActionSheet
+            ref={logoutActionSheet}
+            title={strings.wantLogout}
+            options={[strings.yes, <Text style={{ color: "red", fontSize: 18 }}>{strings.cancel}</Text>]}
+            cancelButtonIndex={1}
+            onPress={(index) => handleLogout(index)}
+          />
         </View>
       </View>
     </Background>

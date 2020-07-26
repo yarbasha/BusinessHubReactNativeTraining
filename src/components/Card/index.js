@@ -16,7 +16,7 @@ function Card(props) {
       <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('User Details', { user })}>
         <View style={styles.container}>
           <ImageBackground
-            source={require('../../images/lightGrayBG.jpg')}
+            source={props.language == "en" ? require('../../images/lightGrayBG.jpg') : require('../../images/lightGrayBGArabic.jpg')}
             style={[styles.background, { flexDirection: props.language == "en" ? "row" : "row-reverse" }]}
             imageStyle={styles.backgroundImage}
           >

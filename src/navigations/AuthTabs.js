@@ -27,6 +27,7 @@ export default function AuthTabs() {
           iconStyle: { height: hp(2.3) },
           labelStyle: { fontSize: hp(1.8) },
           style: { height: hp(7.5), justifyContent: "center" },
+          labelPosition: "below-icon"
         }}
       >
         <Tab.Screen
@@ -34,6 +35,7 @@ export default function AuthTabs() {
           component={AuthStack}
           options={{
             title: strings.login,
+            unmountOnBlur: true,
             tabBarIcon: ({ color }) => <Icon name="log-in-outline" size={hp(3)} color={color} />
           }}
         />
@@ -42,6 +44,7 @@ export default function AuthTabs() {
           component={Signup}
           options={{
             title: strings.signup,
+            unmountOnBlur: true,
             tabBarIcon: ({ color }) => <Icon name="person-add-outline" size={hp(3)} color={color} />
           }}
         />

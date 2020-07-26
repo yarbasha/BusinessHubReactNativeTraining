@@ -22,7 +22,7 @@ let strings = new LocalizedStrings({
     signupForUs: "سجل لدينا في التطبيق!",
     hasAccount: "لديك حساب مسبقاً!",
     settings: "الإعدادات",
-    favoriteLanguage: "الرجاء، اختر لغتك المفضلة:",
+    favoriteLanguage: "اختر لغتك المفضلة:",
     search: "البحث",
     forgetPasswordMessage: "نسيت كلمة المرور؟",
     confirm: "تأكيد",
@@ -34,7 +34,12 @@ let strings = new LocalizedStrings({
     chat: "محادثة",
     topics: "المواضيع",
     contactus: "التواصل",
-    privacy: "الخصوصية"
+    privacy: "الخصوصية",
+    actionSheetTitle: "اختر لغتك المفضلة:",
+    clickHere: "اضغط هنا!",
+    cancel: "إلغاء",
+    wantLogout: "هل تريد بالفعل تسجيل الخروج؟",
+    yes: "نعم"
   },
   en: {
     searchForUser: "Search for User...",
@@ -57,7 +62,7 @@ let strings = new LocalizedStrings({
     signupForUs: "Sign up for us!",
     hasAccount: "Already have an account!",
     settings: "Settings",
-    favoriteLanguage: "Please, Select your favorite language:",
+    favoriteLanguage: "Select your favorite language:",
     search: "Search",
     forgetPasswordMessage: "Forget your password?",
     confirm: "Confirm",
@@ -69,7 +74,12 @@ let strings = new LocalizedStrings({
     chat: "Chat",
     topics: "Topics",
     contactus: "Contanct Us",
-    privacy: "Privacy"
+    privacy: "Privacy",
+    actionSheetTitle: "Choose your favorite language:",
+    clickHere: "Click here!",
+    cancel: "Cancel",
+    wantLogout: "Are you sure?",
+    yes: "Yes"
   }
 });
 

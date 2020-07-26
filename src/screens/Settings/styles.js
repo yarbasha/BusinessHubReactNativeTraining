@@ -16,7 +16,8 @@ export const styles = StyleSheet.create({
   },
   text: {
     color: colors.primary,
-    fontSize: hp(2.8)
+    fontSize: hp(2.8),
+    textAlign: "center"
   },
   touchText: {
     color: colors.primary,
@@ -29,13 +30,12 @@ export const styles = StyleSheet.create({
     borderTopWidth: 1
   },
   logoutTouch: {
-    borderWidth: 1,
-    borderColor: colors.primary,
     backgroundColor: colors.primary,
-    paddingVertical: hp(1),
-    paddingHorizontal: wp(5),
+    paddingVertical: hp(0.75),
+    paddingHorizontal: wp(10),
     borderRadius: wp(20),
-    marginTop: hp(4)
+    marginTop: hp(4),
+    elevation: 24
   },
   logoutTouchText: {
     color: colors.secondary,

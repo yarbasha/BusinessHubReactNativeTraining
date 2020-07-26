@@ -10,7 +10,7 @@ export default function Toast(props) {
   const dispatch = useDispatch();
 
   Animated.timing(opacity, {
-    toValue: 1,
+    toValue: 0.8,
     duration: 700,
     useNativeDriver: true
   }).start();

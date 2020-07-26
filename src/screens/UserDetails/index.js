@@ -19,7 +19,7 @@ function UserDetails(props) {
         <Header title={strings.userDetails} hasBack={true} />
         <View style={styles.container}>
           <ImageBackground
-            source={require('../../images/lightGrayBG.jpg')}
+            source={require('../../images/lightGrayBGFlipped.jpg')}
             style={styles.background}
             imageStyle={styles.backgroundImage}
           >

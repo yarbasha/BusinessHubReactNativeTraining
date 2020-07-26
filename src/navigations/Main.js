@@ -56,11 +56,11 @@ function Main(props) {
 
   strings.setLanguage(props.language);
 
-  if (props.user.Token) {
+  if (props.user.token) {
     return (
       <>
         <Drawer.Navigator
-          initialRouteName="Chat"
+          initialRouteName="Home"
           drawerPosition={props.language == "en" ? "left" : "right"}
           drawerContent={(props) => <DrawerContent {...props} />}
           screenOptions={{ unmountOnBlur: true }}
