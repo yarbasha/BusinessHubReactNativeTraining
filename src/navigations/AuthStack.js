@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import strings from '../localization/strings';
 import Login from '../screens/Login';
 import ForgetPassword from '../screens/ForgetPassword';
+import ValidateCode from '../screens/ValidateCode';
 
 const Stack = createStackNavigator();
 

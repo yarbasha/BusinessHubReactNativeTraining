@@ -31,7 +31,6 @@ function Chat(props) {
 
   useEffect(() => {
     console.log("joinroom");
-    console.log(props.user.token)
     socket.emit("joinroom", {
       room: "12",
       token: props.user.token,

@@ -4,32 +4,30 @@ import { useFormik } from 'formik';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
 import strings from '../../localization/strings';
-import { useNavigation } from '@react-navigation/native';
 import Toast from '../../components/Toast';
 import { styles } from './styles';
 import colors from '../../styles/colors';
-import { forgetPassword } from '../../redux/actions/usersActions';
+import { validateCode } from '../../redux/actions/usersActions';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FastImage from 'react-native-fast-image';
-import ValidateCode from '../ValidateCode';
 import { CLEAR_AUTH_ERROR } from '../../redux/ActionTypes';
+import ChangePassword from '../ChangePassword';
 
-function ForgetPassword(props) {
-  const navigation = useNavigation()
+function ValidateCode(props) {
   let isLoading = props.isLoading;
 
   const Schema = Yup.object().shape({
-    email: Yup.string().email(strings.emailInvalid).required(strings.emailRequired)
+    validationCode: Yup.string().required(strings.codeRequired)
   });
 
   const { handleChange, handleBlur, values, handleSubmit, errors, touched, isValid, dirty } = useFormik({
     initialValues: {
-      email: "",
+      validationCode: "",
       lang: props.language
     },
     onSubmit: values => {
       Keyboard.dismiss();
-      props.forgetPassword(values);
+      props.validateCode(values);
     },
     validationSchema: Schema
   });
@@ -48,52 +46,47 @@ function ForgetPassword(props) {
         </View>
         <View style={styles.contentContainer}>
           <TextInput
-            style={[(errors.email && touched.email) ? styles.inputError : styles.input, { textAlign: props.language == "en" ? "left" : "right" }]}
-            onChangeText={handleChange('email')}
-            onBlur={handleBlur('email')}
-            value={values.email}
-            placeholder={strings.enterEmail}
+            style={[(errors.validationCode && touched.validationCode) ? styles.inputError : styles.input, { textAlign: props.language == "en" ? "left" : "right" }]}
+            onChangeText={handleChange('validationCode')}
+            onBlur={handleBlur('validationCode')}
+            value={values.validationCode}
+            placeholder={strings.enterCode}
           />
           <View style={styles.errorTextContainer}>
-            {(errors.email && touched.email) && <Text style={styles.errorText}>{errors.email}</Text>}
+            {(errors.validationCode && touched.validationCode) && <Text style={styles.errorText}>{errors.validationCode}</Text>}
           </View>
           <View style={styles.btnContainer}>
             <TouchableOpacity onPress={handleSubmit} style={[styles.touchButton, { backgroundColor: disabled ? null : colors.primary }]} disabled={disabled}>
               {isLoading ? <ActivityIndicator size="small" color={colors.primary} />
-                : <Text style={[styles.touchText, { color: disabled ? colors.primary : colors.secondary }]}>{strings.confirm}</Text>
+                : <Text style={[styles.touchText, { color: disabled ? colors.primary : colors.secondary }]}>{strings.validate}</Text>
               }
-            </TouchableOpacity>
-          </View>
-          <View style={styles.btnContainer}>
-            <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-              <Text style={styles.bottomText}>{strings.backToLogin}</Text>
             </TouchableOpacity>
           </View>
         </View>
       </KeyboardAwareScrollView>
-      {props.forgetPasswordResponse.error && <Toast
-        duration={2000}
-        text={props.forgetPasswordResponse.error}
-        onDidShow={() => props.clearError()}
+      {props.errMess && <Toast
+        duration={3000}
+        text={props.errMess}
+        onDidShow={() => props.clearError}
       />}
     </>;
-
-  if (props.forgetPasswordResponse.success) {
-    return <ValidateCode />
+  if (props.validateCodeResponse.userId) {
+    return <ChangePassword userId={props.validateCodeResponse.userId} validationCode={values.validationCode} />
   } else {
     return view;
   }
+
 }
 
 const mapStateToProps = (state) => ({
   language: state.language.lang,
-  forgetPasswordResponse: state.auth.forgetPasswordResponse,
+  validateCodeResponse: state.auth.validateCodeResponse,
   isLoading: state.auth.isLoading
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  forgetPassword: (values) => dispatch(forgetPassword(values)),
+  validateCode: (values) => dispatch(validateCode(values)),
   clearError: () => dispatch({ type: CLEAR_AUTH_ERROR })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ForgetPassword);
+export default connect(mapStateToProps, mapDispatchToProps)(ValidateCode);

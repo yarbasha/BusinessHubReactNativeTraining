@@ -26,7 +26,7 @@ export default function Toast(props) {
 
     setTimeout(() => {
       setVisible(false);
-      dispatch({ type: CLEAR_AUTH_ERROR });
+      props.onDidShow();
     }, props.duration + 700);
   }, []);
 

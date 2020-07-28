@@ -39,7 +39,14 @@ let strings = new LocalizedStrings({
     clickHere: "اضغط هنا!",
     cancel: "إلغاء",
     wantLogout: "هل تريد بالفعل تسجيل الخروج؟",
-    yes: "نعم"
+    yes: "نعم",
+    codeRequired: "الرمز مطلوب!",
+    enterCode: "أدخل رمز التحقق",
+    validate: "تحقق",
+    passwordMustMatch: "كلمة المرور غير متطابقة!",
+    renterPassword: "أعد إدخال كلمة المرور!",
+    changePassword: "تعديل كملة المرور"
+
   },
   en: {
     searchForUser: "Search for User...",
@@ -79,7 +86,13 @@ let strings = new LocalizedStrings({
     clickHere: "Click here!",
     cancel: "Cancel",
     wantLogout: "Are you sure?",
-    yes: "Yes"
+    yes: "Yes",
+    codeRequired: "Validation Code is required!",
+    enterCode: "Enter validation code",
+    validate: "Validate",
+    passwordMustMatch: "Passwords don't match!",
+    renterPassword: "Renter password!",
+    changePassword: "Change Password"
   }
 });
 

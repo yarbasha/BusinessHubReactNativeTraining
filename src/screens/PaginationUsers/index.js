@@ -25,7 +25,14 @@ function PaginationUsers(props) {
           data={props.users}
           renderItem={({ item }) => <PaginationCard user={item} />}
           onEndReachedThreshold={0.1}
-          onEndReached={() => props.fetchPaginationUsers(props.page, props.limit)}
+          onEndReached={() => {
+            if (props.ended) {
+              return;
+            } else {
+              props.fetchPaginationUsers(props.page, props.limit)
+            }
+          }
+          }
           ListFooterComponent={() => {
             if (props.isLoading) return <ActivityIndicator color={colors.primary} size={hp(8)} />
             return null

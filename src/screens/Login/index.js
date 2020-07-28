@@ -11,6 +11,8 @@ import { loginUser } from '../../redux/actions/usersActions';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from '../../components/Toast';
 import FastImage from 'react-native-fast-image';
+import { CLEAR_AUTH_ERROR } from '../../redux/ActionTypes';
+
 
 function Login(props) {
   const navigation = useNavigation()
@@ -89,6 +91,7 @@ function Login(props) {
       {props.user.loginErr && <Toast
         duration={3000}
         text={props.user.loginErr.response.error}
+        onDidShow={() => props.clearError()}
       />}
     </>
   );
@@ -100,7 +103,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (values) => dispatch(loginUser(values))
+  login: (values) => dispatch(loginUser(values)),
+  clearError: () => dispatch({ type: CLEAR_AUTH_ERROR })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

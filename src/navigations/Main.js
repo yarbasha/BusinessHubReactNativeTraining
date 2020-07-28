@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Home from './Home';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import strings from '../localization/strings';
 import Settings from '../screens/Settings';
 import AuthTabs from './AuthTabs';
@@ -13,10 +13,13 @@ import DrawerContent from '../components/DrawerContent';
 import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../styles/colors';
 import { globalStyles } from '../styles/styles';
+import { SET_MESSAGE } from '../redux/ActionTypes';
 
 const Drawer = createDrawerNavigator();
 
 function Main(props) {
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fcmService.registerAppWithFCM();

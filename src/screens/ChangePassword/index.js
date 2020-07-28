@@ -1,42 +1,46 @@
 import React from 'react';
 import { View, Text, TextInput, Keyboard, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useFormik } from 'formik';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import strings from '../../localization/strings';
 import { useNavigation } from '@react-navigation/native';
-import Toast from '../../components/Toast';
 import { styles } from './styles';
 import colors from '../../styles/colors';
-import { signupUser } from '../../redux/actions/usersActions';
+import { changePassword } from '../../redux/actions/usersActions';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Toast from '../../components/Toast';
 import FastImage from 'react-native-fast-image';
 import { CLEAR_AUTH_ERROR } from '../../redux/ActionTypes';
+import Login from '../Login';
 
-function Signup(props) {
 
-  const navigation = useNavigation();
-  let isLoading = props.user.isLoading;
+function ChangePassword(props) {
+  const dispatch = useDispatch();
+  let isLoading = props.isLoading;
 
   const Schema = Yup.object().shape({
-    email: Yup.string().email(strings.emailInvalid).required(strings.emailRequired),
-    password: Yup.string().min(6, strings.passwordShort).required(strings.passwordRequired)
+    password: Yup.string().min(6, strings.passwordShort).required(strings.passwordRequired),
+    passwordConfirmation: Yup.string().oneOf([Yup.ref("password")], strings.passwordMustMatch)
   });
 
   const { handleChange, handleBlur, values, handleSubmit, errors, touched, isValid, dirty } = useFormik({
     initialValues: {
-      email: "",
       password: "",
-      lang: props.language
+      passwordConfirmation: "",
+      lang: props.language,
+      userId: props.userId,
+      validationCode: props.validationCode
     },
     onSubmit: values => {
       Keyboard.dismiss();
-      props.signup(values)
+      props.changePassword(values);
     },
     validationSchema: Schema
   });
   let disabled = isLoading || !isValid || !dirty;
-  return (
+
+  const view =
     <>
       <KeyboardAwareScrollView keyboardShouldPersistTaps="always" contentContainerStyle={styles.container}>
         <View style={styles.imageContainer}>
@@ -48,58 +52,59 @@ function Signup(props) {
         </View>
         <View style={styles.contentContainer}>
           <TextInput
-            style={[(errors.email && touched.email) ? styles.inputError : styles.input, { textAlign: props.language == "en" ? "left" : "right" }]}
-            onChangeText={handleChange('email')}
-            onBlur={handleBlur('email')}
-            value={values.email}
-            placeholder={strings.enterEmail}
-          />
-          <View style={styles.errorTextContainer}>
-            {(errors.email && touched.email) && <Text style={styles.errorText}>{errors.email}</Text>}
-          </View>
-          <TextInput
             style={[(errors.password && touched.password) ? styles.inputError : styles.input, { textAlign: props.language == "en" ? "left" : "right" }]}
             onChangeText={handleChange('password')}
             onBlur={handleBlur('password')}
             value={values.password}
             placeholder={strings.enterPassword}
-            secureTextEntry
+            secureTextEntry={true}
           />
           <View style={styles.errorTextContainer}>
             {(errors.password && touched.password) && <Text style={styles.errorText}>{errors.password}</Text>}
           </View>
+          <TextInput
+            style={[(errors.passwordConfirmation && touched.passwordConfirmation) ? styles.inputError : styles.input, { textAlign: props.language == "en" ? "left" : "right" }]}
+            onChangeText={handleChange('passwordConfirmation')}
+            onBlur={handleBlur('passwordConfirmation')}
+            value={values.passwordConfirmation}
+            placeholder={strings.renterPassword}
+            secureTextEntry
+          />
+          <View style={styles.errorTextContainer}>
+            {(errors.passwordConfirmation && touched.passwordConfirmation) && <Text style={styles.errorText}>{errors.passwordConfirmation}</Text>}
+          </View>
           <View style={styles.btnContainer}>
             <TouchableOpacity onPress={handleSubmit} style={[styles.touchButton, { backgroundColor: disabled ? null : colors.primary }]} disabled={disabled}>
               {isLoading ? <ActivityIndicator size="small" color={colors.primary} />
-                : <Text style={[styles.touchText, { color: disabled ? colors.primary : colors.secondary }]}>{strings.signup}</Text>
+                : <Text style={[styles.touchText, { color: disabled ? colors.primary : colors.secondary }]}>{strings.changePassword}</Text>
               }
-            </TouchableOpacity>
-          </View>
-          <View style={styles.btnContainer}>
-            <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-              <Text style={styles.bottomText}>{strings.hasAccount}</Text>
             </TouchableOpacity>
           </View>
         </View>
       </KeyboardAwareScrollView>
-      {props.user.signupErr && <Toast
+      {props.changePasswordResponse.error && <Toast
         duration={3000}
-        text={props.user.signupErr.response.error}
+        text={props.changePasswordResponse.error}
         onDidShow={() => props.clearError()}
-      />
-      }
-    </>
-  );
+      />}
+    </>;
+  if (props.changePasswordResponse.token) {
+    props.clearError();
+    return <Login />
+  } else {
+    return view;
+  }
 }
 
 const mapStateToProps = (state) => ({
   language: state.language.lang,
-  user: state.auth
+  changePasswordResponse: state.auth.changePasswordResponse,
+  isLoading: state.auth.isLoading
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  signup: (values) => dispatch(signupUser(values)),
+  changePassword: (values) => dispatch(changePassword(values)),
   clearError: () => dispatch({ type: CLEAR_AUTH_ERROR })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(ChangePassword);

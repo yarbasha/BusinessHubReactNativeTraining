@@ -14,14 +14,14 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 let middleware = [thunk];
 
-// if (__DEV__) {
-//   middleware.push(logger);
-// }
+if (__DEV__) {
+  middleware.push(logger);
+}
 
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  whitelist: ['language', 'auth']
+  whitelist: ['language']
 }
 
 export const store = createStore(
