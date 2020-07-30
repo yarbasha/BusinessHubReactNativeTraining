@@ -5,63 +5,98 @@ import Header from '../../components/Header';
 import strings from '../../localization/strings';
 import { language } from '../../redux/actions/languageAction';
 import { styles } from './styles';
-import { logout } from '../../redux/actions/usersActions';
+import { logout } from '../../redux/actions/logoutAction';
 import Background from '../../components/Background';
-import ActionSheet from 'react-native-actionsheet';
+import ActionSheet from '../../components/ActionSheet';
 
 function Settings(props) {
-
   const languageActionSheet = useRef();
   const logoutActionSheet = useRef();
 
-  const handleLanguage = (index) => {
-    if (index == 0 && props.language != "en") {
+  const handleLanguage = (value) => {
+    if (value == "en" && props.language != "en") {
       props.languageAction("en");
       strings.setLanguage("en");
-    } else if (index == 1 && props.language != "ar") {
+    } else if (value == "ar" && props.language != "ar") {
       props.languageAction("ar");
       strings.setLanguage("ar");
-      DevSettings.reload();
+      // DevSettings.reload();
     }
   };
 
-  const handleLogout = (index) => {
-    if (index == 0) {
-      props.logout();
-    }
+  const handleLogout = () => {
+    props.logout();
   };
 
   return (
-    <Background>
-      <Header title={strings.settings} />
-      <View style={styles.container}>
-        <Text style={styles.text}>{strings.favoriteLanguage}</Text>
-        <View style={styles.btnContainer}>
-          <TouchableOpacity onPress={() => languageActionSheet.current.show()}>
-            <Text style={styles.touchText}>{strings.clickHere}</Text>
-          </TouchableOpacity>
-          <ActionSheet
-            ref={languageActionSheet}
-            title={strings.actionSheetTitle}
-            options={["English", "العربية", <Text style={{ color: "red", fontSize: 18 }}>{strings.cancel}</Text>]}
-            cancelButtonIndex={2}
-            onPress={(index) => handleLanguage(index)}
-          />
+    <>
+      <Background>
+        <Header title={strings.settings} />
+        <View style={styles.container}>
+          <Text style={styles.text}>{strings.favoriteLanguage}</Text>
+          <View style={styles.btnContainer}>
+            <TouchableOpacity
+              onPress={() => {
+                languageActionSheet.current.show();
+                logoutActionSheet.current.hide()
+              }}
+            >
+              <Text style={styles.touchText}>{strings.clickHere}</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.logoutContainer}>
+            <TouchableOpacity
+              onPress={() => {
+                logoutActionSheet.current.show();
+                languageActionSheet.current.hide();
+              }}
+              style={styles.logoutTouch}
+            >
+              <Text style={styles.logoutTouchText}>{strings.logout}</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.logoutContainer}>
-          <TouchableOpacity onPress={() => logoutActionSheet.current.show()} style={styles.logoutTouch}>
-            <Text style={styles.logoutTouchText}>{strings.logout}</Text>
-          </TouchableOpacity>
-          <ActionSheet
-            ref={logoutActionSheet}
-            title={strings.wantLogout}
-            options={[strings.yes, <Text style={{ color: "red", fontSize: 18 }}>{strings.cancel}</Text>]}
-            cancelButtonIndex={1}
-            onPress={(index) => handleLogout(index)}
-          />
-        </View>
-      </View>
-    </Background>
+      </Background>
+      <ActionSheet
+        ref={languageActionSheet}
+        title={strings.actionSheetTitle}
+        titleStyle={{ fontSize: 14, color: "gray" }}
+        items={[
+          {
+            text: "English",
+            textStyle: { color: "blue", fontSize: 18 },
+            onPress: () => { handleLanguage("en"); }
+          },
+          {
+            text: "العربية",
+            textStyle: { color: "blue", fontSize: 18 },
+            onPress: () => { handleLanguage("ar"); }
+          },
+          {
+            text: strings.cancel,
+            textStyle: { color: "red", fontSize: 18 },
+            onPress: () => { }
+          }
+        ]}
+      />
+      <ActionSheet
+        ref={logoutActionSheet}
+        title={strings.wantLogout}
+        titleStyle={{ fontSize: 14, color: "gray" }}
+        items={[
+          {
+            text: strings.yes,
+            textStyle: { color: "blue", fontSize: 18 },
+            onPress: () => { handleLogout(); }
+          },
+          {
+            text: strings.cancel,
+            textStyle: { color: "red", fontSize: 18 },
+            onPress: () => { }
+          }
+        ]}
+      />
+    </>
   );
 }
 

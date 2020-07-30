@@ -44,8 +44,9 @@ let strings = new LocalizedStrings({
     enterCode: "أدخل رمز التحقق",
     validate: "تحقق",
     passwordMustMatch: "كلمة المرور غير متطابقة!",
-    renterPassword: "أعد إدخال كلمة المرور!",
-    changePassword: "تعديل كملة المرور"
+    reenterPassword: "أعد إدخال كلمة المرور!",
+    changePassword: "تعديل كملة المرور",
+    reenterPasswordRequired: "يجب إدخال كلمة المرور مرة ثانية!"
 
   },
   en: {
@@ -91,8 +92,9 @@ let strings = new LocalizedStrings({
     enterCode: "Enter validation code",
     validate: "Validate",
     passwordMustMatch: "Passwords don't match!",
-    renterPassword: "Renter password!",
-    changePassword: "Change Password"
+    reenterPassword: "Re-enter password!",
+    changePassword: "Change Password",
+    reenterPasswordRequired: "Password must be entered again!"
   }
 });
 

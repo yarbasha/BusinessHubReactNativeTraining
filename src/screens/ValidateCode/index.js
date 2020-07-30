@@ -7,7 +7,7 @@ import strings from '../../localization/strings';
 import Toast from '../../components/Toast';
 import { styles } from './styles';
 import colors from '../../styles/colors';
-import { validateCode } from '../../redux/actions/usersActions';
+import { validateCode } from '../../redux/actions/validateCodeAction';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FastImage from 'react-native-fast-image';
 import { CLEAR_AUTH_ERROR } from '../../redux/ActionTypes';

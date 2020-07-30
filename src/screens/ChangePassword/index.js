@@ -7,7 +7,7 @@ import strings from '../../localization/strings';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from './styles';
 import colors from '../../styles/colors';
-import { changePassword } from '../../redux/actions/usersActions';
+import { changePassword } from '../../redux/actions/changePasswordAction';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from '../../components/Toast';
 import FastImage from 'react-native-fast-image';
@@ -21,7 +21,7 @@ function ChangePassword(props) {
 
   const Schema = Yup.object().shape({
     password: Yup.string().min(6, strings.passwordShort).required(strings.passwordRequired),
-    passwordConfirmation: Yup.string().oneOf([Yup.ref("password")], strings.passwordMustMatch)
+    passwordConfirmation: Yup.string().oneOf([Yup.ref("password")], strings.passwordMustMatch).required(strings.reenterPasswordRequired)
   });
 
   const { handleChange, handleBlur, values, handleSubmit, errors, touched, isValid, dirty } = useFormik({
@@ -67,7 +67,7 @@ function ChangePassword(props) {
             onChangeText={handleChange('passwordConfirmation')}
             onBlur={handleBlur('passwordConfirmation')}
             value={values.passwordConfirmation}
-            placeholder={strings.renterPassword}
+            placeholder={strings.reenterPassword}
             secureTextEntry
           />
           <View style={styles.errorTextContainer}>

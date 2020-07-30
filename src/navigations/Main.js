@@ -13,7 +13,6 @@ import DrawerContent from '../components/DrawerContent';
 import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../styles/colors';
 import { globalStyles } from '../styles/styles';
-import { SET_MESSAGE } from '../redux/ActionTypes';
 
 const Drawer = createDrawerNavigator();
 
@@ -63,7 +62,7 @@ function Main(props) {
     return (
       <>
         <Drawer.Navigator
-          initialRouteName="Home"
+          initialRouteName="Settings"
           drawerPosition={props.language == "en" ? "left" : "right"}
           drawerContent={(props) => <DrawerContent {...props} />}
           screenOptions={{ unmountOnBlur: true }}

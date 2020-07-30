@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, FlatList, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import { paginationUsers, refreshPaginationUsers } from '../../redux/actions/usersActions';
+import { paginationUsers, refreshPaginationUsers } from '../../redux/actions/paginationUsersAction';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import PaginationCard from '../../components/PaginationCard';
 import Header from '../../components/Header';

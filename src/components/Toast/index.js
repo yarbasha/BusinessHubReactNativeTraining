@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Animated } from 'react-native';
 import { styles } from './styles';
 import { useDispatch } from 'react-redux';
-import { CLEAR_AUTH_ERROR } from '../../redux/ActionTypes';
 
 export default function Toast(props) {
   const [visible, setVisible] = useState(true);

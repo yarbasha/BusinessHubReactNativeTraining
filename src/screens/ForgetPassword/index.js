@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import Toast from '../../components/Toast';
 import { styles } from './styles';
 import colors from '../../styles/colors';
-import { forgetPassword } from '../../redux/actions/usersActions';
+import { forgetPassword } from '../../redux/actions/forgetPasswordAction';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FastImage from 'react-native-fast-image';
 import ValidateCode from '../ValidateCode';

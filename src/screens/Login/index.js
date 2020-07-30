@@ -7,7 +7,7 @@ import strings from '../../localization/strings';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from './styles';
 import colors from '../../styles/colors';
-import { loginUser } from '../../redux/actions/usersActions';
+import { loginUser } from '../../redux/actions/loginAction';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from '../../components/Toast';
 import FastImage from 'react-native-fast-image';

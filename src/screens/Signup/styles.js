@@ -31,7 +31,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: wp(4),
     fontSize: hp(2.5),
     marginTop: hp(2),
-    color: colors.primary
+    color: colors.primary,
+    paddingVertical: hp(1.3)
   },
   inputError: {
     borderWidth: 0.5,
@@ -40,7 +41,8 @@ export const styles = StyleSheet.create({
     fontSize: hp(2.5),
     marginTop: hp(2),
     borderColor: colors.error,
-    color: colors.error
+    color: colors.error,
+    paddingVertical: hp(1.3)
   },
   errorText: {
     color: colors.error,
