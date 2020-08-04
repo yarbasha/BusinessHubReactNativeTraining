@@ -6,10 +6,9 @@ import { useDispatch } from 'react-redux';
 export default function Toast(props) {
   const [visible, setVisible] = useState(true);
   const opacity = useState(new Animated.Value(0))[0];
-  const dispatch = useDispatch();
 
   Animated.timing(opacity, {
-    toValue: 0.8,
+    toValue: 1,
     duration: 700,
     useNativeDriver: true
   }).start();

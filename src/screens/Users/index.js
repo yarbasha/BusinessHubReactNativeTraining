@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import Card from '../../components/Card';
 import Loading from '../../components/Loading';
@@ -41,18 +41,27 @@ function Users(props) {
     isItSearch = true;
   }
 
+  const refetchUsers = () => {
+    if (route.name == "Female Users") {
+      props.fetchFemaleUsers();
+    } else if (route.name == "Male Users") {
+      props.fetchMaleUsers();
+    }
+  }
+
   const handleInput = (name) => {
     props.findUsers(name);
   }
 
   return (
     <Background>
-      {isItSearch && <Header title={strings.search} isSearch={true} handleInput={handleInput} />
-      }
+      {isItSearch && <Header title={strings.search} isSearch={true} handleInput={handleInput} />}
+      {isItUsers && <Header title={headerTitle} />}
       {isLoading ? <Loading /> :
         <>
-          {isItUsers && <Header title={headerTitle} />}
           <FlatList
+            onRefresh={refetchUsers}
+            refreshing={isLoading}
             contentContainerStyle={{ flexGrow: 1 }}
             data={users}
             ListEmptyComponent={() => <Card user={null} />}

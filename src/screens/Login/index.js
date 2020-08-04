@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, TextInput, Keyboard, TouchableOpacity, ActivityIndicator } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, TextInput, Keyboard, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import { useFormik } from 'formik';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
@@ -8,15 +8,16 @@ import { useNavigation } from '@react-navigation/native';
 import { styles } from './styles';
 import colors from '../../styles/colors';
 import { loginUser } from '../../redux/actions/loginAction';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from '../../components/Toast';
 import FastImage from 'react-native-fast-image';
 import { CLEAR_AUTH_ERROR } from '../../redux/ActionTypes';
 
 
 function Login(props) {
-  const navigation = useNavigation()
-  let isLoading = props.user.isLoading
+  const navigation = useNavigation();
+  let isLoading = props.user.isLoading;
+  const scrollView = useRef();
+  const passwordInput = useRef();
 
   const Schema = Yup.object().shape({
     email: Yup.string().email(strings.emailInvalid).required(strings.emailRequired),
@@ -35,11 +36,16 @@ function Login(props) {
     },
     validationSchema: Schema
   });
+
   let disabled = isLoading || !isValid || !dirty;
 
   return (
     <>
-      <KeyboardAwareScrollView keyboardShouldPersistTaps="always" contentContainerStyle={styles.container}>
+      <ScrollView
+        ref={scrollView}
+        keyboardShouldPersistTaps="always"
+        contentContainerStyle={styles.container}
+      >
         <View style={styles.imageContainer}>
           <FastImage
             resizeMode="contain"
@@ -54,23 +60,33 @@ function Login(props) {
             onBlur={handleBlur('email')}
             value={values.email}
             placeholder={strings.enterEmail}
+            keyboardType="email-address"
+            returnKeyType="next"
+            onSubmitEditing={() => passwordInput.current.focus()}
           />
           <View style={styles.errorTextContainer}>
             {(errors.email && touched.email) && <Text style={styles.errorText}>{errors.email}</Text>}
           </View>
           <TextInput
+            ref={passwordInput}
+            onFocus={() => scrollView.current.scrollToEnd({ animated: true })}
             style={[(errors.password && touched.password) ? styles.inputError : styles.input, { textAlign: props.language == "en" ? "left" : "right" }]}
             onChangeText={handleChange('password')}
             onBlur={handleBlur('password')}
             value={values.password}
             placeholder={strings.enterPassword}
             secureTextEntry
+            onSubmitEditing={handleSubmit}
           />
           <View style={styles.errorTextContainer}>
             {(errors.password && touched.password) && <Text style={styles.errorText}>{errors.password}</Text>}
           </View>
           <View style={styles.btnContainer}>
-            <TouchableOpacity onPress={handleSubmit} style={[styles.touchButton, { backgroundColor: disabled ? null : colors.primary }]} disabled={disabled}>
+            <TouchableOpacity
+              onPress={handleSubmit}
+              style={[styles.touchButton, { backgroundColor: disabled ? null : colors.primary }]}
+              disabled={disabled}
+            >
               {isLoading ? <ActivityIndicator size="small" color={colors.primary} />
                 : <Text style={[styles.touchText, { color: disabled ? colors.primary : colors.secondary }]}>{strings.login}</Text>
               }
@@ -81,18 +97,20 @@ function Login(props) {
               <Text style={styles.bottomText}>{strings.signupForUs}</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.touchContainer}>
+          <View style={[styles.touchContainer, { marginBottom: 10 }]}>
             <TouchableOpacity onPress={() => navigation.navigate("ForgetPassword")}>
               <Text style={styles.bottomText}>{strings.forgetPasswordMessage}</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </KeyboardAwareScrollView>
-      {props.user.loginErr && <Toast
-        duration={3000}
-        text={props.user.loginErr.response.error}
-        onDidShow={() => props.clearError()}
-      />}
+      </ScrollView>
+      {
+        props.user.loginErr && <Toast
+          duration={3000}
+          text={props.user.loginErr.response.error}
+          onDidShow={() => props.clearError()}
+        />
+      }
     </>
   );
 }

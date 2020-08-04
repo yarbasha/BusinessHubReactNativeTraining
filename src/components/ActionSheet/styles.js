@@ -3,6 +3,10 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: "#00000044"
+  },
+  contentContainer: {
     alignSelf: "center",
     backgroundColor: "#fff",
     borderTopLeftRadius: 30,
@@ -11,7 +15,8 @@ export const styles = StyleSheet.create({
     borderColor: "lightgray",
     borderWidth: 1,
     borderBottomWidth: 0,
-    position: "absolute"
+    position: "absolute",
+    bottom: 0
   },
   header: {
     justifyContent: "center",

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, DevSettings } from 'react-native';
 import { connect } from 'react-redux';
 import Header from '../../components/Header';
@@ -36,20 +36,14 @@ function Settings(props) {
           <Text style={styles.text}>{strings.favoriteLanguage}</Text>
           <View style={styles.btnContainer}>
             <TouchableOpacity
-              onPress={() => {
-                languageActionSheet.current.show();
-                logoutActionSheet.current.hide()
-              }}
+              onPress={() => languageActionSheet.current.show()}
             >
               <Text style={styles.touchText}>{strings.clickHere}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.logoutContainer}>
             <TouchableOpacity
-              onPress={() => {
-                logoutActionSheet.current.show();
-                languageActionSheet.current.hide();
-              }}
+              onPress={() => logoutActionSheet.current.show()}
               style={styles.logoutTouch}
             >
               <Text style={styles.logoutTouchText}>{strings.logout}</Text>

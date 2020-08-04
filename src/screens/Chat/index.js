@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Alert } from 'react-native';
+import { View, TextInput, Alert, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import colors from '../../styles/colors';
 import Header from '../../components/Header';
 import strings from '../../localization/strings';
-import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { styles } from './styles';
 import Message from '../../components/Message';
@@ -89,7 +88,7 @@ function Chat(props) {
     return (
       <Background>
         <Header title={strings.chat} />
-        <KeyboardAwareFlatList
+        <FlatList
           contentContainerStyle={styles.container}
           keyboardShouldPersistTaps="always"
           data={props.messages}

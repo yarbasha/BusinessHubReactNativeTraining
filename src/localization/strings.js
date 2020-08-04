@@ -61,7 +61,7 @@ let strings = new LocalizedStrings({
     users: "Users",
     login: "Login",
     signup: "Sign Up",
-    enterEmail: "ُEnter your email",
+    enterEmail: "Enter your email",
     enterPassword: "Enter your password",
     emailRequired: "Email must be entered!",
     passwordRequired: "Password must be entered!",

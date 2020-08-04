@@ -14,9 +14,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 let middleware = [thunk];
 
-if (__DEV__) {
-  middleware.push(logger);
-}
+// if (__DEV__) {
+//   middleware.push(logger);
+// }
 
 const persistConfig = {
   key: "root",

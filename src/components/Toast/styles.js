@@ -5,7 +5,7 @@ import colors from '../../styles/colors';
 export const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    bottom: hp(10),
+    bottom: hp(7),
     left: '50%'
   },
   textContainer: {

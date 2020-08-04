@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, Keyboard, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, Keyboard, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import { useFormik } from 'formik';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
@@ -9,7 +9,6 @@ import Toast from '../../components/Toast';
 import { styles } from './styles';
 import colors from '../../styles/colors';
 import { forgetPassword } from '../../redux/actions/forgetPasswordAction';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FastImage from 'react-native-fast-image';
 import ValidateCode from '../ValidateCode';
 import { CLEAR_AUTH_ERROR } from '../../redux/ActionTypes';
@@ -38,7 +37,7 @@ function ForgetPassword(props) {
 
   const view =
     <>
-      <KeyboardAwareScrollView keyboardShouldPersistTaps="always" contentContainerStyle={styles.container}>
+      <ScrollView keyboardShouldPersistTaps="always" contentContainerStyle={styles.container}>
         <View style={styles.imageContainer}>
           <FastImage
             resizeMode="contain"
@@ -70,7 +69,7 @@ function ForgetPassword(props) {
             </TouchableOpacity>
           </View>
         </View>
-      </KeyboardAwareScrollView>
+      </ScrollView>
       {props.forgetPasswordResponse.error && <Toast
         duration={2000}
         text={props.forgetPasswordResponse.error}

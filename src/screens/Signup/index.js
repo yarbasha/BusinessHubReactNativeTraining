@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, TextInput, Keyboard, TouchableOpacity, ActivityIndicator } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, TextInput, Keyboard, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import { useFormik } from 'formik';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
@@ -9,12 +9,11 @@ import Toast from '../../components/Toast';
 import { styles } from './styles';
 import colors from '../../styles/colors';
 import { signupUser } from '../../redux/actions/signupAction';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FastImage from 'react-native-fast-image';
 import { CLEAR_AUTH_ERROR } from '../../redux/ActionTypes';
 
 function Signup(props) {
-
+  const scrollView = useRef();
   const navigation = useNavigation();
   let isLoading = props.user.isLoading;
 
@@ -38,7 +37,7 @@ function Signup(props) {
   let disabled = isLoading || !isValid || !dirty;
   return (
     <>
-      <KeyboardAwareScrollView keyboardShouldPersistTaps="always" contentContainerStyle={styles.container}>
+      <ScrollView ref={scrollView} keyboardShouldPersistTaps="always" contentContainerStyle={styles.container}>
         <View style={styles.imageContainer}>
           <FastImage
             resizeMode="contain"
@@ -61,6 +60,7 @@ function Signup(props) {
             style={[(errors.password && touched.password) ? styles.inputError : styles.input, { textAlign: props.language == "en" ? "left" : "right" }]}
             onChangeText={handleChange('password')}
             onBlur={handleBlur('password')}
+            onFocus={() => scrollView.current.scrollToEnd()}
             value={values.password}
             placeholder={strings.enterPassword}
             secureTextEntry
@@ -81,7 +81,7 @@ function Signup(props) {
             </TouchableOpacity>
           </View>
         </View>
-      </KeyboardAwareScrollView>
+      </ScrollView>
       {props.user.signupErr && <Toast
         duration={3000}
         text={props.user.signupErr.response.error}
