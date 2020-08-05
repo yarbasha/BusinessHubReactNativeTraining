@@ -15,7 +15,7 @@ import { CLEAR_AUTH_ERROR } from '../../redux/ActionTypes';
 
 function Login(props) {
   const navigation = useNavigation();
-  let isLoading = props.user.isLoading;
+  const isLoading = props.isLoading;
   const scrollView = useRef();
   const passwordInput = useRef();
 
@@ -37,7 +37,7 @@ function Login(props) {
     validationSchema: Schema
   });
 
-  let disabled = isLoading || !isValid || !dirty;
+  const disabled = isLoading || !isValid || !dirty;
 
   return (
     <>
@@ -61,6 +61,7 @@ function Login(props) {
             value={values.email}
             placeholder={strings.enterEmail}
             keyboardType="email-address"
+            autoCapitalize="none"
             returnKeyType="next"
             onSubmitEditing={() => passwordInput.current.focus()}
           />
@@ -69,7 +70,7 @@ function Login(props) {
           </View>
           <TextInput
             ref={passwordInput}
-            onFocus={() => scrollView.current.scrollToEnd({ animated: true })}
+            onFocus={() => scrollView.current.scrollToEnd()}
             style={[(errors.password && touched.password) ? styles.inputError : styles.input, { textAlign: props.language == "en" ? "left" : "right" }]}
             onChangeText={handleChange('password')}
             onBlur={handleBlur('password')}
@@ -105,9 +106,9 @@ function Login(props) {
         </View>
       </ScrollView>
       {
-        props.user.loginErr && <Toast
-          duration={3000}
-          text={props.user.loginErr.response.error}
+        props.error && <Toast
+          duration={2000}
+          text={props.error.message}
           onDidShow={() => props.clearError()}
         />
       }
@@ -117,7 +118,9 @@ function Login(props) {
 
 const mapStateToProps = (state) => ({
   language: state.language.lang,
-  user: state.auth
+  user: state.auth.user,
+  error: state.auth.error,
+  isLoading: state.auth.isLoading
 });
 
 const mapDispatchToProps = (dispatch) => ({

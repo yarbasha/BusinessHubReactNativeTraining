@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, Keyboard, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import { useFormik } from 'formik';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import * as Yup from 'yup';
 import strings from '../../localization/strings';
 import { useNavigation } from '@react-navigation/native';
@@ -10,13 +10,13 @@ import colors from '../../styles/colors';
 import { changePassword } from '../../redux/actions/changePasswordAction';
 import Toast from '../../components/Toast';
 import FastImage from 'react-native-fast-image';
-import { CLEAR_AUTH_ERROR } from '../../redux/ActionTypes';
+import { CLEAR_ERRORS } from '../../redux/ActionTypes';
 import Login from '../Login';
 
 
 function ChangePassword(props) {
-  const dispatch = useDispatch();
-  let isLoading = props.isLoading;
+  const navigation = useNavigation();
+  const isLoading = props.isLoading;
 
   const Schema = Yup.object().shape({
     password: Yup.string().min(6, strings.passwordShort).required(strings.passwordRequired),
@@ -37,7 +37,7 @@ function ChangePassword(props) {
     },
     validationSchema: Schema
   });
-  let disabled = isLoading || !isValid || !dirty;
+  const disabled = isLoading || !isValid || !dirty;
 
   const view =
     <>
@@ -82,14 +82,15 @@ function ChangePassword(props) {
         </View>
       </ScrollView>
       {props.changePasswordResponse.error && <Toast
-        duration={3000}
+        duration={2000}
         text={props.changePasswordResponse.error}
-        onDidShow={() => props.clearError()}
+        onDidShow={() => props.clearErrors()}
       />}
     </>;
   if (props.changePasswordResponse.token) {
-    props.clearError();
-    return <Login />
+    props.clearErrors();
+    navigation.navigate("Login");
+    return <View></View>
   } else {
     return view;
   }
@@ -97,13 +98,13 @@ function ChangePassword(props) {
 
 const mapStateToProps = (state) => ({
   language: state.language.lang,
-  changePasswordResponse: state.auth.changePasswordResponse,
-  isLoading: state.auth.isLoading
+  changePasswordResponse: state.forgetPassword.changePasswordResponse,
+  isLoading: state.forgetPassword.isLoading
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changePassword: (values) => dispatch(changePassword(values)),
-  clearError: () => dispatch({ type: CLEAR_AUTH_ERROR })
+  clearErrors: () => dispatch({ type: CLEAR_ERRORS })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChangePassword);

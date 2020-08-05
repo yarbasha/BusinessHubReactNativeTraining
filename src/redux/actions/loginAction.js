@@ -1,11 +1,10 @@
 import * as ActionTypes from '../ActionTypes';
-import messaging from '@react-native-firebase/messaging';
 import { pathUrl } from '../../config';
 
-export const loginUser = (values) => async (dispatch) => {
+export const loginUser = (values) => (dispatch, getState) => {
+
   dispatch({ type: ActionTypes.LOGIN_USER_LOADING });
-  const fcm = await messaging().getToken();
-  values.fcm = fcm;
+  values.fcm = getState().auth.fcm;
 
   fetch(`${pathUrl}login`, {
     method: "POST",
@@ -16,13 +15,10 @@ export const loginUser = (values) => async (dispatch) => {
   }).then(response => response.json())
     .then(data => {
       if (data.error) {
-        var error = new Error('Error' + data.status + ':' + data.statusText);
-        error.response = data;
-        throw error;
+        throw new Error(data.error);
       }
       else {
         dispatch({ type: ActionTypes.LOGIN_USER_SUCCESS, user: data });
-        dispatch({ type: ActionTypes.SET_DEVICE_TOKEN, fcm });
       }
     })
     .catch(error => dispatch({ type: ActionTypes.LOGIN_USER_FAILED, error }));

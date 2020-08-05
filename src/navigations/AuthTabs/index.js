@@ -1,12 +1,11 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import strings from '../localization/strings';
-import Signup from '../screens/Signup';
-// import Icon from 'react-native-vector-icons/FontAwesome';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import AuthStack from '../navigations/AuthStack';
-import { globalStyles } from '../styles/styles';
-import colors from '../styles/colors';
+import strings from '../../localization/strings';
+import Signup from '../../screens/Signup';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import AuthStack from '../AuthStack';
+import { styles } from './styles';
+import colors from '../../styles/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 
@@ -21,12 +20,12 @@ export default function AuthTabs() {
         tabBarPosition="bottom"
         tabBarOptions={{
           activeTintColor: colors.primary,
-          tabStyle: globalStyles.tabContainer,
+          tabStyle: styles.tabContainer,
           keyboardHidesTabBar: true,
           showIcon: true,
-          iconStyle: { height: hp(2.3) },
-          labelStyle: { fontSize: hp(1.8) },
-          style: { height: hp(7.5), justifyContent: "center" },
+          iconStyle: styles.iconStyle,
+          labelStyle: styles.labelStyle,
+          style: styles.tabBarStyle,
           labelPosition: "below-icon"
         }}
       >

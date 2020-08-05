@@ -2,21 +2,6 @@ import { StyleSheet } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import colors from './colors';
 
-export const globalStyles = StyleSheet.create({
-  tabContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  rightDrawerLabel: {
-    marginLeft: wp(-55),
-    alignSelf: "center",
-  },
-  rightDrawerIcon: {
-    marginLeft: wp(57)
-  }
-});
-
 export const usersStyle = StyleSheet.create({
   btnContainer: {
     justifyContent: "space-between",

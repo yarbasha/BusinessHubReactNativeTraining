@@ -24,7 +24,9 @@ export default function Toast(props) {
 
     setTimeout(() => {
       setVisible(false);
-      props.onDidShow();
+      if (props.onDidShow) {
+        props.onDidShow();
+      }
     }, props.duration + 700);
   }, []);
 

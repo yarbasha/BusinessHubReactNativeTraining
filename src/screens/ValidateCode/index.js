@@ -9,7 +9,7 @@ import { styles } from './styles';
 import colors from '../../styles/colors';
 import { validateCode } from '../../redux/actions/validateCodeAction';
 import FastImage from 'react-native-fast-image';
-import { CLEAR_AUTH_ERROR } from '../../redux/ActionTypes';
+import { CLEAR_ERRORS } from '../../redux/ActionTypes';
 import ChangePassword from '../ChangePassword';
 
 function ValidateCode(props) {
@@ -31,7 +31,7 @@ function ValidateCode(props) {
     validationSchema: Schema
   });
 
-  let disabled = isLoading || !isValid || !dirty;
+  const disabled = isLoading || !isValid || !dirty;
 
   const view =
     <>
@@ -48,6 +48,7 @@ function ValidateCode(props) {
             style={[(errors.validationCode && touched.validationCode) ? styles.inputError : styles.input, { textAlign: props.language == "en" ? "left" : "right" }]}
             onChangeText={handleChange('validationCode')}
             onBlur={handleBlur('validationCode')}
+            autoCapitalize="none"
             value={values.validationCode}
             placeholder={strings.enterCode}
           />
@@ -63,10 +64,10 @@ function ValidateCode(props) {
           </View>
         </View>
       </ScrollView>
-      {props.errMess && <Toast
-        duration={3000}
-        text={props.errMess}
-        onDidShow={() => props.clearError}
+      {props.validateCodeResponse.error && <Toast
+        duration={2000}
+        text={props.validateCodeResponse.error}
+      // onDidShow={() => props.clearErrors()}
       />}
     </>;
   if (props.validateCodeResponse.userId) {
@@ -79,13 +80,13 @@ function ValidateCode(props) {
 
 const mapStateToProps = (state) => ({
   language: state.language.lang,
-  validateCodeResponse: state.auth.validateCodeResponse,
-  isLoading: state.auth.isLoading
+  validateCodeResponse: state.forgetPassword.validateCodeResponse,
+  isLoading: state.forgetPassword.isLoading
 });
 
 const mapDispatchToProps = (dispatch) => ({
   validateCode: (values) => dispatch(validateCode(values)),
-  clearError: () => dispatch({ type: CLEAR_AUTH_ERROR })
+  clearErrors: () => dispatch({ type: CLEAR_ERRORS })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ValidateCode);

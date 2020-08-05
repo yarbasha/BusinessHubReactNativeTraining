@@ -15,7 +15,7 @@ import { CLEAR_AUTH_ERROR } from '../../redux/ActionTypes';
 function Signup(props) {
   const scrollView = useRef();
   const navigation = useNavigation();
-  let isLoading = props.user.isLoading;
+  const isLoading = props.isLoading;
 
   const Schema = Yup.object().shape({
     email: Yup.string().email(strings.emailInvalid).required(strings.emailRequired),
@@ -34,7 +34,9 @@ function Signup(props) {
     },
     validationSchema: Schema
   });
-  let disabled = isLoading || !isValid || !dirty;
+
+  const disabled = isLoading || !isValid || !dirty;
+
   return (
     <>
       <ScrollView ref={scrollView} keyboardShouldPersistTaps="always" contentContainerStyle={styles.container}>
@@ -50,6 +52,8 @@ function Signup(props) {
             style={[(errors.email && touched.email) ? styles.inputError : styles.input, { textAlign: props.language == "en" ? "left" : "right" }]}
             onChangeText={handleChange('email')}
             onBlur={handleBlur('email')}
+            keyboardType="email-address"
+            autoCapitalize="none"
             value={values.email}
             placeholder={strings.enterEmail}
           />
@@ -82,9 +86,9 @@ function Signup(props) {
           </View>
         </View>
       </ScrollView>
-      {props.user.signupErr && <Toast
-        duration={3000}
-        text={props.user.signupErr.response.error}
+      {props.error && <Toast
+        duration={2000}
+        text={props.error.message}
         onDidShow={() => props.clearError()}
       />
       }
@@ -94,7 +98,9 @@ function Signup(props) {
 
 const mapStateToProps = (state) => ({
   language: state.language.lang,
-  user: state.auth
+  user: state.auth.user,
+  isLoading: state.auth.isLoading,
+  error: state.auth.error
 });
 
 const mapDispatchToProps = (dispatch) => ({

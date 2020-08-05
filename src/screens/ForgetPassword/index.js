@@ -11,7 +11,7 @@ import colors from '../../styles/colors';
 import { forgetPassword } from '../../redux/actions/forgetPasswordAction';
 import FastImage from 'react-native-fast-image';
 import ValidateCode from '../ValidateCode';
-import { CLEAR_AUTH_ERROR } from '../../redux/ActionTypes';
+import { CLEAR_ERRORS } from '../../redux/ActionTypes';
 
 function ForgetPassword(props) {
   const navigation = useNavigation()
@@ -33,7 +33,7 @@ function ForgetPassword(props) {
     validationSchema: Schema
   });
 
-  let disabled = isLoading || !isValid || !dirty;
+  const disabled = isLoading || !isValid || !dirty;
 
   const view =
     <>
@@ -50,6 +50,8 @@ function ForgetPassword(props) {
             style={[(errors.email && touched.email) ? styles.inputError : styles.input, { textAlign: props.language == "en" ? "left" : "right" }]}
             onChangeText={handleChange('email')}
             onBlur={handleBlur('email')}
+            keyboardType="email-address"
+            autoCapitalize="none"
             value={values.email}
             placeholder={strings.enterEmail}
           />
@@ -73,7 +75,7 @@ function ForgetPassword(props) {
       {props.forgetPasswordResponse.error && <Toast
         duration={2000}
         text={props.forgetPasswordResponse.error}
-        onDidShow={() => props.clearError()}
+        onDidShow={() => props.clearErrors()}
       />}
     </>;
 
@@ -86,13 +88,13 @@ function ForgetPassword(props) {
 
 const mapStateToProps = (state) => ({
   language: state.language.lang,
-  forgetPasswordResponse: state.auth.forgetPasswordResponse,
-  isLoading: state.auth.isLoading
+  forgetPasswordResponse: state.forgetPassword.forgetPasswordResponse,
+  isLoading: state.forgetPassword.isLoading
 });
 
 const mapDispatchToProps = (dispatch) => ({
   forgetPassword: (values) => dispatch(forgetPassword(values)),
-  clearError: () => dispatch({ type: CLEAR_AUTH_ERROR })
+  clearErrors: () => dispatch({ type: CLEAR_ERRORS })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ForgetPassword);

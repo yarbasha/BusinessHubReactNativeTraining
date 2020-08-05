@@ -8,20 +8,21 @@ import auth from './reducers/auth';
 import foundUsers from './reducers/foundUsers';
 import paginationUsers from './reducers/paginationUsers';
 import chat from './reducers/chat';
+import forgetPassword from './reducers/forgetPassword';
 import { persistCombineReducers, persistStore } from 'redux-persist';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import AsyncStorage from '@react-native-community/async-storage';
 
 let middleware = [thunk];
 
-// if (__DEV__) {
-//   middleware.push(logger);
-// }
+if (__DEV__) {
+  middleware.push(logger);
+}
 
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  whitelist: ['language']
+  whitelist: ['language', 'auth']
 }
 
 export const store = createStore(
@@ -30,6 +31,7 @@ export const store = createStore(
     femaleUsers,
     language,
     auth,
+    forgetPassword,
     foundUsers,
     paginationUsers,
     chat
