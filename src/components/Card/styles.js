@@ -22,8 +22,9 @@ export const styles = StyleSheet.create({
   },
   body: {
     flexGrow: 1,
-    flexDirection: 'column',
-    justifyContent: "space-evenly"
+    flexDirection: "column",
+    justifyContent: "center",
+    
   },
   text: {
     fontSize: hp('2.7%'),

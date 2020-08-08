@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Alert, FlatList } from 'react-native';
+import { View, TextInput, Alert, FlatList, KeyboardAvoidingView } from 'react-native';
 import { connect } from 'react-redux';
 import colors from '../../styles/colors';
 import Header from '../../components/Header';
@@ -15,6 +15,7 @@ import { fetchMessages } from '../../redux/actions/chatAction';
 import Loading from '../../components/Loading';
 import { SET_MESSAGE } from '../../redux/ActionTypes';
 import { useNavigation } from '@react-navigation/native';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 function Chat(props) {
@@ -60,7 +61,7 @@ function Chat(props) {
     socket.on("chat-error", (chatError) => {
       console.log("chat-error", chatError);
       Alert.alert("Chat Error: ", chatError);
-      navigation.navigate("Home");
+      // navigation.navigate("Home");
     });
 
   });
@@ -87,6 +88,7 @@ function Chat(props) {
   } else {
     return (
       <Background>
+        <KeyboardAvoidingView behavior="padding" style={{flex: 1}} keyboardVerticalOffset={hp(5)}>
         <Header title={strings.chat} />
         <FlatList
           contentContainerStyle={styles.container}
@@ -115,7 +117,6 @@ function Chat(props) {
             enablesReturnKeyAutomatically={true}
             value={message}
             onChangeText={(value) => setMessage(value)}
-            onSubmitEditing={handleSend}
           />
           <Icon
             name="send"
@@ -124,6 +125,7 @@ function Chat(props) {
             onPress={handleSend}
           />
         </View>
+        </KeyboardAvoidingView>
       </Background>
     );
   }

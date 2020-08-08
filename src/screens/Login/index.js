@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, Text, TextInput, Keyboard, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, TextInput, Keyboard, TouchableOpacity, ActivityIndicator, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useFormik } from 'formik';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
@@ -11,6 +11,7 @@ import { loginUser } from '../../redux/actions/loginAction';
 import Toast from '../../components/Toast';
 import FastImage from 'react-native-fast-image';
 import { CLEAR_AUTH_ERROR } from '../../redux/ActionTypes';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 function Login(props) {
@@ -38,9 +39,9 @@ function Login(props) {
   });
 
   const disabled = isLoading || !isValid || !dirty;
-
   return (
     <>
+    <KeyboardAvoidingView style={{flex:1}} behavior="padding" keyboardVerticalOffset={hp(5)}>
       <ScrollView
         ref={scrollView}
         keyboardShouldPersistTaps="always"
@@ -104,7 +105,9 @@ function Login(props) {
             </TouchableOpacity>
           </View>
         </View>
+
       </ScrollView>
+      </KeyboardAvoidingView>
       {
         props.error && <Toast
           duration={2000}

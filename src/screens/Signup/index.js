@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, Text, TextInput, Keyboard, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, TextInput, Keyboard, TouchableOpacity, ActivityIndicator, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useFormik } from 'formik';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
@@ -11,6 +11,7 @@ import colors from '../../styles/colors';
 import { signupUser } from '../../redux/actions/signupAction';
 import FastImage from 'react-native-fast-image';
 import { CLEAR_AUTH_ERROR } from '../../redux/ActionTypes';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 function Signup(props) {
   const scrollView = useRef();
@@ -39,6 +40,7 @@ function Signup(props) {
 
   return (
     <>
+    <KeyboardAvoidingView style={{flex:1}} behavior="padding" keyboardVerticalOffset={hp(5)}>
       <ScrollView ref={scrollView} keyboardShouldPersistTaps="always" contentContainerStyle={styles.container}>
         <View style={styles.imageContainer}>
           <FastImage
@@ -86,6 +88,7 @@ function Signup(props) {
           </View>
         </View>
       </ScrollView>
+      </KeyboardAvoidingView>
       {props.error && <Toast
         duration={2000}
         text={props.error.message}

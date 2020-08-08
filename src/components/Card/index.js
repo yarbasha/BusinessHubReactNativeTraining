@@ -26,7 +26,7 @@ function Card(props) {
               onLoad={() => { if (user.picture) setImage({ uri: user.picture }); }}
               onError={() => setImage(defaultUserImage)}
             />
-            <View style={styles.body}>
+            <View style={[styles.body, {alignItems:props.language == "en"? "flex-start": "flex-end"}]}>
               <Text style={styles.text}>{strings.firstName}{user.name}</Text>
             </View>
           </ImageBackground>

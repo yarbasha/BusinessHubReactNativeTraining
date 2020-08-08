@@ -35,7 +35,11 @@ export const styles = StyleSheet.create({
     paddingHorizontal: wp(10),
     borderRadius: wp(20),
     marginTop: hp(4),
-    elevation: 24
+    elevation: 24,
+    shadowColor: "gray",
+    shadowOffset: {height: 5, width: 5},
+    shadowOpacity: 0.5,
+    shadowRadius: 8
   },
   logoutTouchText: {
     color: colors.secondary,

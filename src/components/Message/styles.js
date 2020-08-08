@@ -34,6 +34,7 @@ export const receivedStyles = StyleSheet.create({
   time: {
     fontSize: hp(1.5),
     textAlignVertical: "bottom",
+    alignSelf: "flex-end",
     color: colors.secondary
   }
 });
@@ -72,6 +73,7 @@ export const sentStyles = StyleSheet.create({
   time: {
     fontSize: hp(1.5),
     textAlignVertical: "bottom",
+    alignSelf: "flex-end",
     color: colors.primary
   }
 });

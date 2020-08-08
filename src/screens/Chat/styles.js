@@ -17,15 +17,17 @@ export const styles = StyleSheet.create({
   input: {
     width: '90%',
     color: colors.primary,
-    minHeight: hp(5),
+    minHeight: hp(4.5),
     lineHeight: hp(2.5),
     borderWidth: 0.7,
     borderColor: colors.primary,
     borderRadius: wp(2.6),
-    paddingVertical: hp(0.5),
+    paddingTop: hp(1),
+    paddingBottom: hp(1),
     paddingHorizontal: wp(4),
-    fontSize: hp('2%'),
-    marginVertical: hp('1%'),
+    fontSize: hp(2),
+    marginVertical: hp(1),
+    alignSelf: "center",
     marginRight: wp(1.5)
   }
 });

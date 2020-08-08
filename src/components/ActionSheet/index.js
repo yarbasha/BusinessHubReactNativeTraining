@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
-import { View, Text, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, SafeAreaView } from 'react-native';
 import { styles } from './styles';
 
 function ActionSheetItem(props) {
@@ -35,6 +35,7 @@ const ActionSheet = forwardRef((props, ref) => {
         onDismiss={hide}
         onRequestClose={hide}
       >
+      <SafeAreaView style={{flex: 1}}>
         <View style={styles.container}>
           <View style={styles.contentContainer}>
             <View style={styles.header}>
@@ -53,6 +54,7 @@ const ActionSheet = forwardRef((props, ref) => {
             })}
           </View>
         </View>
+      </SafeAreaView>
       </Modal>
     </>
   );
